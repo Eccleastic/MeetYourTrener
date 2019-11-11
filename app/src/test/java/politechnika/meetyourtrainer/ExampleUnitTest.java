@@ -1,4 +1,4 @@
-package politechnika.meetyourtrener;
+package politechnika.meetyourtrainer;
 
 import org.junit.Test;
 
