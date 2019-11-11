@@ -28,6 +28,7 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait">
+        <activity android:name=".LoginPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,5 +65,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
+
+</manifest>
+        <activity android:name=".SignUpPage">
+        </activity>
+        <activity android:name=".MainActivity">
+        </activity>
+    </application>
 
 </manifest>
