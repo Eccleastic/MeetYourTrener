@@ -2,9 +2,10 @@ package politechnika.meetyourtrainer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpPage extends AppCompatActivity {
 
@@ -18,7 +19,9 @@ public class SignUpPage extends AppCompatActivity {
         button = (Button) findViewById(R.id.button2);
 
         MainMenu();
-    };
+    }
+
+    ;
 
     private void MainMenu() {
         button.setOnClickListener(new View.OnClickListener() {

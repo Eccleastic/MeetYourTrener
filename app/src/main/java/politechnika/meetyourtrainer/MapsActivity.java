@@ -1,17 +1,16 @@
 package politechnika.meetyourtrainer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -20,7 +19,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -30,23 +28,22 @@ import com.google.android.gms.tasks.Task;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
-    TextView textView;
+    private static final String TAG = MapsActivity.class.getSimpleName();
     private final LatLng budynek_CTI = new LatLng(51.746956, 19.455958);
     private final LatLng budynek_centrum_sportu = new LatLng(51.746256, 19.451444);
     private final LatLng budynek_sukcesja = new LatLng(51.749201, 19.448128);
     private final LatLng budynek_WEEIA = new LatLng(51.752612, 19.453118);
+    TextView textView;
     double latitude, longitude;
+    boolean locationPermissionGranted;
+    boolean wasCentered = false;
+    Marker marker;
+    Thread threadLocalization;
+    private GoogleMap mMap;
     private Location lastLocation;
     private CameraPosition cameraPosition;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    boolean locationPermissionGranted;
-    boolean wasCentered = false;
-    private static final String TAG = MapsActivity.class.getSimpleName();
     private int markerNumber = 0;
-    Marker marker;
-    Thread threadLocalization;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
