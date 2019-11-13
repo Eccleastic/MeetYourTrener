@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">MeetYourTrener</string>
+    <string name="app_name">MeetYourTrainer</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="meet_your_trainer">Meet Your Trainer</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="email_address_or_login">Email Address or Login</string>
+    <string name="log_in_problems_click_here">
+        <a href="https://www.google.com">Log in problems? Click here</a>
+    </string>
+    <string name="sign_in">Sign in</string>
+    <string name="log_in_with_facebook">Log in with Facebook</string>
+    <string name="log_in_with_twitter">Log in with Twitter</string>
+    <string name="textview">TextView</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password2">Password</string>
+    <string name="register">Register</string>
+    <string name="button_i_am_a_trainer">I am a trainer</string>
+    <string name="button_looking_for_a_trainer">Looking for a trainer</string>
+    <string name="fragment_search">Fragment Search</string>
+    <string name="fragment_message">Fragment Message</string>
+    <string name="fragment_calendar">Fragment Calendar</string>
+    <string name="fragment_contact">Fragment Contact</string>
+    <string name="fragment_settings">Fragment Settings</string>
+    <string name="button">Button</string>
 </resources>
