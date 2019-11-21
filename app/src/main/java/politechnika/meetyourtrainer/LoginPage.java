@@ -9,10 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import politechnika.meetyourtrainer.api.APIHandler;
 
 
 public class LoginPage extends AppCompatActivity {
@@ -38,89 +35,34 @@ public class LoginPage extends AppCompatActivity {
 
     }
 
-    private boolean emailValidate() {
-        boolean valid = true;
-
-        String email = emailAddress.getText().toString();
-        if (email.isEmpty()) {
-//        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailAddress.setError("Enter a valid email address");
-            valid = false;
+    private boolean validateLoginCredentials(String userName, String userPassword) {
+        boolean valid = false;
+        if (userPassword.isEmpty() || userPassword.length() < 4 || userPassword.length() > 10) {
+            this.userPassword.setError("Password between 4 and 10 characters");
+            return valid;
         } else {
-            emailAddress.setError(null);
+            valid = APIHandler.confirUserNameAndUserPasswordWithDatabase(userName, userPassword);
+            return valid;
         }
-
-        return valid;
-    }
-
-    private boolean passwordValidate() {
-        boolean valid = true;
-
-        String password = userPassword.getText().toString();
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            userPassword.setError("Password between 4 and 10 characters");
-            valid = false;
-        } else {
-            userPassword.setError(null);
-        }
-
-
-        return valid;
     }
 
     private void Login() {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (emailAddress.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getBaseContext(), "Please enter username or email", Toast.LENGTH_LONG).show();
-                } else {
-                    emailValidate();
-                }
-                if (userPassword.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getBaseContext(), "Please enter password", Toast.LENGTH_LONG).show();
-                } else {
-                    passwordValidate();
-                }
-                String url = "jdbc:sqlserver://mytdbserver.database.windows.net:1433;database=MYTDB;user=admin1@mytdbserver;password=mytdbAdmin#;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-
-                try {
-                    Connection connection = null;
-                    connection = DriverManager.getConnection(url);
-//                    String schema = connection.getSchema();
-//                    System.out.println("Successful connection - Schema: " + schema);
-
-                    System.out.println("Query data example:");
-                    System.out.println("=========================================");
-
-                    // Create and execute a SELECT SQL statement.
-                    String selectSql = "SELECT * FROM Users";
-
-                    try (Statement statement = connection.createStatement();
-                         ResultSet resultSet = statement.executeQuery(selectSql)) {
-
-                        // Print results from select statement
-                        System.out.println("Useres table:");
-                        while (resultSet.next()) {
-                            System.out.println(resultSet.getString(1)
-                                    + " "
-                                    + resultSet.getString(2)
-                                    + " "
-                                    + resultSet.getString(3)
-                                    + " "
-                                    + resultSet.getString(4));
-                        }
-                        connection.close();
-                        if (resultSet.getString(4).equals(userPassword.getText().toString())) {
-                            Toast.makeText(getBaseContext(), "Password is correct", Toast.LENGTH_LONG).show();
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        if (emailAddress.getText().toString().trim().isEmpty() || userPassword.getText().toString().trim().isEmpty()) {
+//                            Toast.makeText(getBaseContext(), "Please enter login credentials", Toast.LENGTH_LONG).show();
+                        } else {
+                            if (validateLoginCredentials(emailAddress.getText().toString(), userPassword.getText().toString())) {
+                                startActivity(new Intent(LoginPage.this, MainActivity.class));
+                            }
                         }
                     }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                };
+                thread.start();
             }
         });
 
