@@ -41,11 +41,19 @@ android {
 //        implementation 'com.android.support:design:28.0.0'
         implementation 'com.oracle:ojdbc6:12.1.0.1-atlassian-hosted'
         implementation 'com.google.android.material:material:1.0.0'
-        implementation "androidx.appcompat:appcompat:${versions.androidX}"
-        implementation "androidx.recyclerview:recyclerview:${versions.androidX}"
-        implementation "androidx.annotation:annotation:${versions.androidX}"
-        implementation "com.google.android.material:material:${versions.androidX}"
+        //implementation "androidx.appcompat:appcompat:${versions.androidX}"
+        //implementation "androidx.recyclerview:recyclerview:${versions.androidX}"
+        //implementation "androidx.annotation:annotation:${versions.androidX}"
+        //implementation "com.google.android.material:material:${versions.androidX}"
+        implementation "androidx.appcompat:appcompat:1.0"
+        implementation "androidx.recyclerview:recyclerview:1.0"
+        implementation "androidx.annotation:annotation:1.0"
+        implementation "com.google.android.material:material:1.0"
         implementation "androidx.constraintlayout:constraintlayout:"
 //        implementation files('ojdbc7.jar')
     }
+}
+
+dependencies {
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 }

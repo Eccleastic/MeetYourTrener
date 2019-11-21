@@ -100,10 +100,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions().position(budynek_centrum_sportu).title("Centrum Sportu"));
         mMap.addMarker(new MarkerOptions().position(budynek_sukcesja).title("Galeria Sukcesja"));
         mMap.addMarker(new MarkerOptions().position(budynek_WEEIA).title("Wydzial EEIA"));
-        /*mMap.moveCamera(CameraUpdateFactory.newLatLng(budynek_CTI));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(budynek_centrum_sportu));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(budynek_sukcesja));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(budynek_WEEIA));*/
 
         threadLocalization = new Thread() {
             @Override
