@@ -1,5 +1,7 @@
 package politechnika.meetyourtrainer;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,9 @@ public class SearchListView extends Fragment {
     private TextView description;
     private TextView name2;
     private TextView description2;
+
+    private TextView user1profile;
+    private TextView user2profile;
 
 
     public static SearchListView newInstance() {
@@ -38,11 +43,29 @@ public class SearchListView extends Fragment {
         name2 = view.findViewById(R.id.user2name);
         description2 = view.findViewById(R.id.user2description);
 
+        user1profile = view.findViewById(R.id.user1profile);
+        user2profile = view.findViewById(R.id.user2profile);
+
         name.setText("Adam Malysz");
         description.setText("Specjalizuje sie w skakaniu. W góre, w bok, na nartach, bez nart, z jedną nartą, na wszystkim i ze wszystkim. 60$/h.");
         name2.setText("Kasia Drąg");
         description2.setText("Trenerka yogi z 15-letnim doświadczeniem. Zapraszam do siebie wszystkie panie od pon do pt w godzinach 8-14. 30$/h");
 
+        user1profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        user2profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
