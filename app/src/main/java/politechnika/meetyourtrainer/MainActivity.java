@@ -52,7 +52,10 @@ package politechnika.meetyourtrainer;
 //    }
 //}
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -61,6 +64,9 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int ACTIVITY_REQUEST_CODE = 1;
+    Button filterButton;
 
     private BottomNavigationView bottomNavigationView;
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -99,6 +105,15 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         //ustawianie widoku mapy jako pierwsze co widzimy po zalogowaniu
         setFragment(new FragmentSearch());
+
+        filterButton = findViewById(R.id.filterButton);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
+                startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
+            }
+        });
 
     }
 
