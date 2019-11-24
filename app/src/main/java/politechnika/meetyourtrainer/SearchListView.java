@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 public class SearchListView extends Fragment {
-    SearchListViewModel slvm;
+    //SearchListViewModel slvm;
     private TextView name;
     private TextView description;
     private TextView name2;
@@ -24,7 +24,7 @@ public class SearchListView extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        slvm = ViewModelProviders.of(getActivity()).get(SearchListViewModel.class);
+        //slvm = ViewModelProviders.of(getActivity()).get(SearchListViewModel.class);
         setRetainInstance(true);
     }
 
