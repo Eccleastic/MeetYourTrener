@@ -1,4 +1,4 @@
-package politechnika.meetyourtrainer;
+package politechnika.meetyourtrainer.GoogleMaps;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -24,9 +24,14 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.List;
+
+import politechnika.meetyourtrainer.R;
 
 public class SearchMapView extends Fragment implements OnMapReadyCallback {
 
@@ -43,10 +48,6 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback {
 
     Thread threadLocalization;
 
-    private final LatLng budynek_CTI = new LatLng(51.746956, 19.455958);
-    private final LatLng budynek_centrum_sportu = new LatLng(51.746256, 19.451444);
-    private final LatLng budynek_sukcesja = new LatLng(51.749201, 19.448128);
-    private final LatLng budynek_WEEIA = new LatLng(51.752612, 19.453118);
 
     public static SearchMapView newInstance() {
         return new SearchMapView();
@@ -104,15 +105,18 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback {
         updateLocation();
         getDeviceLocation();
 
-        googleMap.addMarker(new MarkerOptions().position(budynek_CTI).title("Centrum Technologii Informatycznych"));
-        googleMap.addMarker(new MarkerOptions().position(budynek_centrum_sportu).title("Centrum Sportu"));
-        googleMap.addMarker(new MarkerOptions().position(budynek_sukcesja).title("Galeria Sukcesja"));
-        googleMap.addMarker(new MarkerOptions().position(budynek_WEEIA).title("Wydzial EEIA"));
+        //LOAD MARKERS FROM MARKERS PROVIDER CLASS
+        MarkersProvider markersFromAPI = new MarkersProvider(0,0,0);
+        markersFromAPI.createMarkers();
+        List<MarkerOptions> markers = markersFromAPI.getMarkers();
+        for (MarkerOptions markerOption : markers) {
+            googleMap.addMarker(markerOption);
+        }
 
-        CameraPosition Liberty = CameraPosition.builder().target(budynek_CTI).zoom(17).bearing(0).tilt(45).build();
+        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(51.746956, 19.455958)).zoom(17).bearing(0).tilt(45).build();
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
 
-        threadLocalization = new Thread() {
+        /*threadLocalization = new Thread() {
             @Override
             public void run() {
                 while (!isInterrupted()) {
@@ -132,6 +136,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback {
             }
         };
         threadLocalization.start();
+        */
 
     }
 
@@ -196,7 +201,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback {
 
                         } else {
                             Toast.makeText(getActivity(), "Current location is null. Using defaults.", Toast.LENGTH_SHORT).show();
-                            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(budynek_CTI, 17));
+                            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.746956, 19.455958), 17));
                             mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
                     }
