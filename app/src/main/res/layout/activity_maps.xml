@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapsActivity"
+    tools:context=".GoogleMaps.MapsActivity"
     >
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +21,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="47dp"
         android:layout_marginBottom="0dp"
-        tools:context=".MapsActivity" />
+        tools:context=".GoogleMaps.MapsActivity" />
 
     <TextView
         android:id="@+id/textView2"

@@ -56,7 +56,7 @@ public class APIHandler {
     }
 
     public static void registerNewUser(String userName, String userPassword){
-        String stringUrl =
+        //String stringUrl =
     }
 
 }

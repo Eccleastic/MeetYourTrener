@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapsActivity"
+            android:name=".GoogleMaps.MapsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".SignUpPage"></activity>
@@ -50,6 +50,8 @@
             You can define the keys for the debug and release targets in src/debug/ and src/release/.
        -->
         <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".FilterActivity"></activity>
+        <activity android:name=".Profile.ProfileActivity"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
