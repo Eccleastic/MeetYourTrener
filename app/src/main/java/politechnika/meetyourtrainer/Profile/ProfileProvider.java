@@ -35,7 +35,7 @@ public class ProfileProvider {
         this.username = username;
     }
 
-    public void getDataFromApi(Context c) {
+    public void getDataFromApi(final Context c, final ServerCallback callback) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/")
                 .append("api/getUserData?code=WfFchO6iJS2vWHuc7rrY95auXXaVBZJyY2i58r6oAM0QVkX9x3RuLw==&username=")
@@ -45,7 +45,7 @@ public class ProfileProvider {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    setUserId(response.getString("user_ID"));
+                    /*setUserId(response.getString("user_ID"));
                     setName(response.getString("user_name"));
                     setSex(Integer.valueOf(response.getString("sex")));
                     setEmail(response.getString("contact_email"));
@@ -54,8 +54,8 @@ public class ProfileProvider {
                     setLastname(response.getString("last_name"));
                     setRating(Double.valueOf(response.getString("user_rating")));
                     setDescription(response.getString("description"));
-
-                    System.out.println(response.getString("description"));
+                    System.out.println(response.getString("description"));*/
+                    callback.onSuccess(response); // call call back function here
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

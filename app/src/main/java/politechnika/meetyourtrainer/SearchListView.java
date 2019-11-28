@@ -9,8 +9,12 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import politechnika.meetyourtrainer.Profile.ProfileActivity;
 import politechnika.meetyourtrainer.Profile.ProfileProvider;
+import politechnika.meetyourtrainer.Profile.ServerCallback;
 
 public class SearchListView extends Fragment {
     //SearchListViewModel slvm;
@@ -65,13 +69,27 @@ public class SearchListView extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
                 ProfileProvider profile = new ProfileProvider("testtrener");
-                profile.getDataFromApi(getActivity());
-                intent.putExtra("description", profile.getDescription());
-                intent.putExtra("title", profile.getName()+ " " + profile.getLastname());
-                intent.putExtra("rate", profile.getRating());
-                intent.putExtra("email", profile.getEmail());
-                intent.putExtra("phone", profile.getPhoneNumber());
-                startActivity(intent);
+                profile.getDataFromApi(getActivity(), new ServerCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) throws JSONException {
+                        profile.setUserId(response.getString("user_ID"));
+                        profile.setName(response.getString("user_name"));
+                        profile.setSex(Integer.valueOf(response.getString("sex")));
+                        profile.setEmail(response.getString("contact_email"));
+                        profile.setPhoneNumber(response.getString("contact_phone"));
+                        profile.setName(response.getString("first_name"));
+                        profile.setLastname(response.getString("last_name"));
+                        profile.setRating(Double.valueOf(response.getString("user_rating")));
+                        profile.setDescription(response.getString("description"));
+                        System.out.println(response.getString("description"));
+                        intent.putExtra("description", profile.getDescription());
+                        intent.putExtra("title", profile.getName()+ " " + profile.getLastname());
+                        intent.putExtra("rate", profile.getRating());
+                        intent.putExtra("email", profile.getEmail());
+                        intent.putExtra("phone", profile.getPhoneNumber());
+                        startActivity(intent);
+                    }
+                });
             }
         });
 
