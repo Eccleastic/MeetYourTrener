@@ -31,8 +31,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.List;
+import java.util.Random;
 
-import politechnika.meetyourtrainer.ProfileActivity;
+import politechnika.meetyourtrainer.AdProvider;
+import politechnika.meetyourtrainer.Profile.ProfileActivity;
+import politechnika.meetyourtrainer.Profile.ProfileProvider;
 import politechnika.meetyourtrainer.R;
 
 public class SearchMapView extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -241,6 +244,15 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        AdProvider ad = new AdProvider("1");
+        ad.setTitle(marker.getTitle());
+        ad.setDescription(marker.getSnippet());
+        Random r = new Random();
+        double randomValue = 1.0 + (5.0 - 1.0) * r.nextDouble();
+        ad.setRating(randomValue);
+        intent.putExtra("description", ad.getDescription());
+        intent.putExtra("title", ad.getTitle());
+        intent.putExtra("rate", ad.getRating());
         startActivity(intent);
     }
 }

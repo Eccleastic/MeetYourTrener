@@ -19,21 +19,20 @@ public class MarkersProvider {
     }
 
     void calculateLatLong() {
-    };
+    }
 
     void getDataFromApi() {
-    };
+    }
 
     void getMarkersByDistance() {
-    };
+    }
 
     void getMarkersByKeyWord() {
-    };
+    }
 
     void getMarkersByDistanceAndKeyWord() {
     }
 
-    ;
 
     void createMarkers() {
         LatLng budynek_CTI = new LatLng(51.746956, 19.455958);
@@ -52,10 +51,14 @@ public class MarkersProvider {
         markers.add(new MarkerOptions().position(new LatLng(51.731147, 19.451916)).title("Crossfit").snippet("Adam Lamaga 45zl/h"));
         markers.add(new MarkerOptions().position(new LatLng(51.730482, 19.453311)).title("Dwubój olimpijski").snippet("Karol Olech 150zl/h"));
         markers.add(new MarkerOptions().position(new LatLng(51.731399, 19.452893)).title("Tróbój").snippet("Jerzy Dudek 130zl/h"));
-    };
+    }
+
+    ;
 
     List<MarkerOptions> getMarkers() {
         return this.markers;
-    };
+    }
+
+    ;
 
 }
