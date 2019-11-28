@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import politechnika.meetyourtrainer.Profile.ProfileActivity;
+import politechnika.meetyourtrainer.Profile.ProfileProvider;
 
 public class SearchListView extends Fragment {
     //SearchListViewModel slvm;
@@ -63,6 +64,13 @@ public class SearchListView extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                ProfileProvider profile = new ProfileProvider("testtrener");
+                profile.getDataFromApi(getActivity());
+                intent.putExtra("description", profile.getDescription());
+                intent.putExtra("title", profile.getName()+ " " + profile.getLastname());
+                intent.putExtra("rate", profile.getRating());
+                intent.putExtra("email", profile.getEmail());
+                intent.putExtra("phone", profile.getPhoneNumber());
                 startActivity(intent);
             }
         });
