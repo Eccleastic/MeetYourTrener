@@ -1,5 +1,6 @@
 package politechnika.meetyourtrainer.GoogleMaps;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -31,9 +32,10 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
+import politechnika.meetyourtrainer.ProfileActivity;
 import politechnika.meetyourtrainer.R;
 
-public class SearchMapView extends Fragment implements OnMapReadyCallback {
+public class SearchMapView extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     GoogleMap mGoogleMap;
     MapView mMapView;
@@ -104,6 +106,8 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback {
         getLocationPermission();
         updateLocation();
         getDeviceLocation();
+
+        googleMap.setOnInfoWindowClickListener(this);
 
         //LOAD MARKERS FROM MARKERS PROVIDER CLASS
         MarkersProvider markersFromAPI = new MarkersProvider(0,0,0);
@@ -232,6 +236,12 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback {
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        startActivity(intent);
     }
 }
 
