@@ -21,6 +21,8 @@ import androidx.viewpager.widget.ViewPager;
 public class FragmentSearch extends Fragment {
     SearchPagerAdapter searchPagerAdapter;
     ViewPager viewPager;
+    Button filterButton;
+    private static final int ACTIVITY_REQUEST_CODE = 1;
 
 
     @Nullable
@@ -34,6 +36,16 @@ public class FragmentSearch extends Fragment {
         searchPagerAdapter = new SearchPagerAdapter(getChildFragmentManager());
         viewPager = view.findViewById(R.id.pager);
         viewPager.setAdapter(searchPagerAdapter);
+
+        filterButton = view.findViewById(R.id.filterButton);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), FilterActivity.class);
+                startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
+            }
+        });
+
     }
 
     /*

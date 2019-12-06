@@ -65,7 +65,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int ACTIVITY_REQUEST_CODE = 1;
     Button filterButton;
 
     private BottomNavigationView bottomNavigationView;
@@ -106,16 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
         //ustawianie widoku mapy jako pierwsze co widzimy po zalogowaniu
         setFragment(new FragmentSearch());
-
-        filterButton = findViewById(R.id.filterButton);
-        filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
-                startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
-            }
-        });
-
     }
 
     public void setFragment(Fragment fragment) {
