@@ -1,4 +1,4 @@
-package politechnika.meetyourtrainer;
+package politechnika.meetyourtrainer.Calendar;
 
 import androidx.fragment.app.Fragment;
 
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import politechnika.meetyourtrainer.R;
 
 public class FragmentCalendar extends Fragment {
     @Override
