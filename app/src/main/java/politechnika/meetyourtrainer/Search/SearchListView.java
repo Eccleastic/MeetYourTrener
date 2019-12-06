@@ -35,7 +35,6 @@ public class SearchListView extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //slvm = ViewModelProviders.of(getActivity()).get(SearchListViewModel.class);
         setRetainInstance(true);
     }
 
