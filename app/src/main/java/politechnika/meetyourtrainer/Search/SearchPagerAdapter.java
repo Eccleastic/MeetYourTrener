@@ -1,10 +1,10 @@
-package politechnika.meetyourtrainer;
+package politechnika.meetyourtrainer.Search;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import politechnika.meetyourtrainer.GoogleMaps.SearchMapView;
+import politechnika.meetyourtrainer.Search.GoogleMaps.SearchMapView;
 
 public class SearchPagerAdapter extends FragmentStatePagerAdapter {
     public SearchPagerAdapter(FragmentManager fm) {

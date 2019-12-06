@@ -1,4 +1,4 @@
-package politechnika.meetyourtrainer.GoogleMaps;
+package politechnika.meetyourtrainer.Search.GoogleMaps;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;

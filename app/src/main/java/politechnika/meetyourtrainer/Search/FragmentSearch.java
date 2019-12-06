@@ -1,21 +1,20 @@
-package politechnika.meetyourtrainer;
+package politechnika.meetyourtrainer.Search;
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
+
+import politechnika.meetyourtrainer.FilterActivity;
+import politechnika.meetyourtrainer.R;
+import politechnika.meetyourtrainer.Search.SearchPagerAdapter;
 
 
 public class FragmentSearch extends Fragment {

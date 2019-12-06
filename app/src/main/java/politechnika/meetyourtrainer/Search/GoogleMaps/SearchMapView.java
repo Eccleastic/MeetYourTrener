@@ -1,4 +1,4 @@
-package politechnika.meetyourtrainer.GoogleMaps;
+package politechnika.meetyourtrainer.Search.GoogleMaps;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,7 +35,6 @@ import java.util.Random;
 
 import politechnika.meetyourtrainer.AdProvider;
 import politechnika.meetyourtrainer.Profile.ProfileActivity;
-import politechnika.meetyourtrainer.Profile.ProfileProvider;
 import politechnika.meetyourtrainer.R;
 
 public class SearchMapView extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
