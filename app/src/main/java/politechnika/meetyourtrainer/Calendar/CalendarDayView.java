@@ -13,13 +13,13 @@ import java.util.ArrayList;
 
 import politechnika.meetyourtrainer.R;
 
-public class CalendarThisWeekView extends Fragment {
+public class CalendarDayView extends Fragment {
 
     RecyclerView recyclerView;
     MyAdapter myAdapter;
 
-    public static CalendarThisWeekView newInstance() {
-        return new CalendarThisWeekView();
+    public static CalendarDayView newInstance() {
+        return new CalendarDayView();
     }
 
     @Override
@@ -31,14 +31,13 @@ public class CalendarThisWeekView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_calendar_week, container, false);
+        View view = inflater.inflate(R.layout.fragment_calendar_day, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         myAdapter = new MyAdapter(getActivity().getApplicationContext(), getList());
         recyclerView.setAdapter(myAdapter);
-
 
         return view;
     }
@@ -53,37 +52,7 @@ public class CalendarThisWeekView extends Fragment {
         m.setImg(R.drawable.face);
         models.add(m);
 
-        m = new CardModel();
-        m.setDesctiption("Michał Tybora, 12:00 09.12.2019(poniedziałek)");
-        m.setTitle("Trójbój siłowy");
-        m.setImg(R.drawable.emoji);
-        models.add(m);
-
-        m = new CardModel();
-        m.setDesctiption("Joanna Jedrzejczyk, 20:00 10.12.2019(wtorek)");
-        m.setTitle("Kickboxing");
-        m.setImg(R.drawable.face);
-        models.add(m);
-
-        m = new CardModel();
-        m.setDesctiption("Kasia Basia , 22:00 10.12.2019(wtorek)");
-        m.setTitle("Yoga");
-        m.setImg(R.drawable.emoji);
-        models.add(m);
-
-        m = new CardModel();
-        m.setDesctiption("Otylia Jedrzejczak, 06:00 12.12.2019(czwartek)");
-        m.setTitle("Basen");
-        m.setImg(R.drawable.face);
-        models.add(m);
-
-        m = new CardModel();
-        m.setDesctiption("Otylia Jedrzejczak, 20:00 12.12.2019(czwartej)");
-        m.setTitle("Basen");
-        m.setImg(R.drawable.emoji);
-        models.add(m);
-
         return models;
 
     }
-}
+} 
