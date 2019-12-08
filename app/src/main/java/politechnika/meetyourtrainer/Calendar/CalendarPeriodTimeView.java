@@ -1,7 +1,6 @@
 package politechnika.meetyourtrainer.Calendar;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import politechnika.meetyourtrainer.MeetingInfoActivity;
-import politechnika.meetyourtrainer.Profile.ProfileActivity;
 import politechnika.meetyourtrainer.R;
 
 public class CalendarPeriodTimeView extends Fragment {
@@ -112,16 +109,6 @@ public class CalendarPeriodTimeView extends Fragment {
                         dialog.dismiss();
                     }
                 });
-            }
-        });
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(getActivity(), MeetingInfoActivity.class);
-                intent.putExtra("description", description);
-                intent.putExtra("id", id);
-                intent.putExtra("address", address);
-                startActivityForResult(intent, 1);
             }
         });
 

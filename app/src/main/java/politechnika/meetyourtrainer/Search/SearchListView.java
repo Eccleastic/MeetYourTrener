@@ -18,7 +18,7 @@ import politechnika.meetyourtrainer.Profile.ServerCallback;
 import politechnika.meetyourtrainer.R;
 
 public class SearchListView extends Fragment {
-    //SearchListViewModel slvm;
+
     private TextView name;
     private TextView description;
     private TextView name2;

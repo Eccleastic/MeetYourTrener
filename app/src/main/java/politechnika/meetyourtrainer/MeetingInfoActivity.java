@@ -16,8 +16,6 @@ public class MeetingInfoActivity extends AppCompatActivity {
     TextView meetingDescription;
     Button backButton;
 
-    String meeting_id, street, set_route, description;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
