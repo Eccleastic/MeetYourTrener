@@ -1,6 +1,7 @@
 package politechnika.meetyourtrainer.Calendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.cardview.widget.CardView;
 
 import java.util.ArrayList;
 
+import politechnika.meetyourtrainer.MeetingInfoActivity;
 import politechnika.meetyourtrainer.R;
 
 public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter<MyHolder> {
@@ -41,6 +43,11 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
             public void onClick(View v) {
                 //implement onClick
                 System.out.println("You clicked card number " + position);
+                Intent intent = new Intent(c, MeetingInfoActivity.class);
+                intent.putExtra("description", models.get(position).desctiption);
+                intent.putExtra("id", models.get(position).title);
+                intent.putExtra("address", models.get(position).title);
+                c.startActivity(intent);
             }
         });
     }
