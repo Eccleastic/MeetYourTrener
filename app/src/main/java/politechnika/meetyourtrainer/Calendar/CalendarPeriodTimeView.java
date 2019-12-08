@@ -17,7 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import politechnika.meetyourtrainer.R;
 
@@ -47,6 +50,10 @@ public class CalendarPeriodTimeView extends Fragment {
         submitButton = view.findViewById(R.id.submitButton);
         recyclerView = view.findViewById(R.id.recyclerView);
 
+        String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
+        dateStart.setText(currentDate);
+        dateEnd.setText(currentDate);
+
         dateStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -74,14 +81,22 @@ public class CalendarPeriodTimeView extends Fragment {
 
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
-                        for (int i = 0; i < response.length(); i++) {
+                        if (response.length() == 0) {
                             CardModel m = new CardModel();
-                            JSONObject obj = response.getJSONObject(i);
-                            m.setDesctiption(obj.getString("note") + ",\n" + obj.getString("meeting_address") + ",\n" + obj.getString("meeting_date"));
-                            m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
-                            m.setImg(R.drawable.face);
+                            m.setTitle("No meetings planned");
+                            m.setDesctiption("");
+                            m.setImg(R.drawable.sademoji);
                             models.add(m);
-                            System.out.println(response.getJSONObject(i).toString());
+                        } else {
+                            for (int i = 0; i < response.length(); i++) {
+                                CardModel m = new CardModel();
+                                JSONObject obj = response.getJSONObject(i);
+                                m.setDesctiption(obj.getString("note") + ", " + obj.getString("meeting_address") + ", " + obj.getString("meeting_date"));
+                                m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
+                                m.setImg(R.drawable.face);
+                                models.add(m);
+                                System.out.println(response.getJSONObject(i).toString());
+                            }
                         }
                         myAdapter = new MyAdapter(getActivity(), models);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));

@@ -1,5 +1,6 @@
 package politechnika.meetyourtrainer.Calendar;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import politechnika.meetyourtrainer.R;
 
@@ -32,27 +40,40 @@ public class CalendarDayView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_calendar_day, container, false);
-
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
+        final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
 
-        myAdapter = new MyAdapter(getActivity().getApplicationContext(), getList());
-        recyclerView.setAdapter(myAdapter);
+        MeetingProvider mp = new MeetingProvider(currentDate, currentDate);
+        ArrayList<CardModel> models = new ArrayList<>();
+        mp.getDataFromApi(getActivity(), new ServerCallback() {
+
+            @Override
+            public void onSuccess(JSONArray response) throws JSONException {
+                if (response.length() == 0) {
+                    CardModel m = new CardModel();
+                    m.setTitle("No meetings today");
+                    m.setDesctiption("");
+                    m.setImg(R.drawable.sademoji);
+                    models.add(m);
+                } else {
+                    for (int i = 0; i < response.length(); i++) {
+                        CardModel m = new CardModel();
+                        JSONObject obj = response.getJSONObject(i);
+                        m.setDesctiption(obj.getString("note") + ", " + obj.getString("meeting_address") + ", " + obj.getString("meeting_date"));
+                        m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
+                        m.setImg(R.drawable.face);
+                        models.add(m);
+                        System.out.println(response.getJSONObject(i).toString());
+                    }
+                }
+                myAdapter = new MyAdapter(getActivity(), models);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                recyclerView.setAdapter(myAdapter);
+                dialog.dismiss();
+            }
+        });
 
         return view;
-    }
-
-    private ArrayList<CardModel> getList(){
-
-        ArrayList<CardModel> models = new ArrayList<>();
-
-        CardModel m = new CardModel();
-        m.setDesctiption("Adam Malysz, 19:00 07.12.2019(sobota)");
-        m.setTitle("Skoki narciarskie");
-        m.setImg(R.drawable.face);
-        models.add(m);
-
-        return models;
-
     }
 } 
