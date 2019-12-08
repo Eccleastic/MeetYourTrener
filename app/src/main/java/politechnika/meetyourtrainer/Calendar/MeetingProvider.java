@@ -27,11 +27,6 @@ public class MeetingProvider {
     String dateStart;
     String dateEnd;
 
-    ArrayList<CardModel> models = new ArrayList<>();
-
-    MyAdapter myAdapter;
-
-
     public MeetingProvider(String dateStart, String dateEnd) {
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
@@ -41,7 +36,8 @@ public class MeetingProvider {
     public void getDataFromApi(final Context c, final ServerCallback callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("http://meetyourtrenerspringfunctions.azurewebsites.net").append("/api/getMeetingsFromDateToDate?code=rSElQLtf");
+        stringBuilder.append("http://meetyourtrenerspringfunctions.azurewebsites.net");
+        stringBuilder.append("/api/getMeetingsFromDateToDate?code=rSElQLtf");
         stringBuilder.append("/xYOOhG/iPF0jVKXjze9aWPb4fwq8kYq3NMzmBtS3i20Yg==&startdate=");
         stringBuilder.append(dateStart).append("&enddate=").append(dateEnd);
 
@@ -51,23 +47,10 @@ public class MeetingProvider {
         String url = stringBuilder.toString();
         JsonArrayRequest jor = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
             try {
-                /*System.out.println(response.length());
-                for (int i = 0; i < response.length(); i++) {
-                    CardModel m = new CardModel();
-                    JSONObject obj = response.getJSONObject(i);
-                    m.setDesctiption(obj.getString("note") + ",\n" + obj.getString("meeting_address") + ",\n" + obj.getString("meeting_date"));
-                    m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
-                    m.setImg(R.drawable.face);
-                    models.add(m);
-                    System.out.println(response.getJSONObject(i).toString());
-                }
-                myAdapter = new MyAdapter(c, models);
-                dialog.dismiss();*/
                 callback.onSuccess(response); // call call back function here
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
 
         }, error -> {
             try {
@@ -90,9 +73,5 @@ public class MeetingProvider {
         );
         RequestQueue q = Volley.newRequestQueue(c);
         q.add(jor);
-    }
-
-    public MyAdapter getMyAdapter(){
-        return myAdapter;
     }
 }
