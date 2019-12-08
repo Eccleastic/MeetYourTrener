@@ -45,16 +45,6 @@ public class ProfileProvider {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    /*setUserId(response.getString("user_ID"));
-                    setName(response.getString("user_name"));
-                    setSex(Integer.valueOf(response.getString("sex")));
-                    setEmail(response.getString("contact_email"));
-                    setPhoneNumber(response.getString("contact_phone"));
-                    setName(response.getString("first_name"));
-                    setLastname(response.getString("last_name"));
-                    setRating(Double.valueOf(response.getString("user_rating")));
-                    setDescription(response.getString("description"));
-                    System.out.println(response.getString("description"));*/
                     callback.onSuccess(response); // call call back function here
                 } catch (JSONException e) {
                     e.printStackTrace();

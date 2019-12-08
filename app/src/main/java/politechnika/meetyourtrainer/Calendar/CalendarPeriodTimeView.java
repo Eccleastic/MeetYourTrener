@@ -1,6 +1,7 @@
 package politechnika.meetyourtrainer.Calendar;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import politechnika.meetyourtrainer.MeetingInfoActivity;
+import politechnika.meetyourtrainer.Profile.ProfileActivity;
 import politechnika.meetyourtrainer.R;
 
 public class CalendarPeriodTimeView extends Fragment {
@@ -30,6 +33,8 @@ public class CalendarPeriodTimeView extends Fragment {
     RecyclerView recyclerView;
     MyAdapter myAdapter;
     Button submitButton;
+
+    String id, description, address;
 
     public static CalendarPeriodTimeView newInstance() {
         return new CalendarPeriodTimeView();
@@ -94,6 +99,9 @@ public class CalendarPeriodTimeView extends Fragment {
                                 m.setDesctiption(obj.getString("note") + ", " + obj.getString("meeting_address") + ", " + obj.getString("meeting_date"));
                                 m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
                                 m.setImg(R.drawable.face);
+                                id = Integer.toString(obj.getInt("meeting_ID"));
+                                address = obj.getString("meeting_address");
+                                description = response.toString();
                                 models.add(m);
                                 System.out.println(response.getJSONObject(i).toString());
                             }
@@ -104,6 +112,16 @@ public class CalendarPeriodTimeView extends Fragment {
                         dialog.dismiss();
                     }
                 });
+            }
+        });
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity(), MeetingInfoActivity.class);
+                intent.putExtra("description", description);
+                intent.putExtra("id", id);
+                intent.putExtra("address", address);
+                startActivityForResult(intent, 1);
             }
         });
 
