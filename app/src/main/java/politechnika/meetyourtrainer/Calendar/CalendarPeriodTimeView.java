@@ -114,16 +114,6 @@ public class CalendarPeriodTimeView extends Fragment {
                 });
             }
         });
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(getActivity(), MeetingInfoActivity.class);
-                intent.putExtra("description", description);
-                intent.putExtra("id", id);
-                intent.putExtra("address", address);
-                startActivityForResult(intent, 1);
-            }
-        });
 
         return view;
     }

@@ -36,6 +36,13 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
         holder.title.setText(models.get(position).getTitle());
         holder.description.setText(models.get(position).getDesctiption());
         holder.image.setImageResource(models.get(position).getImg());
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //implement onClick
+                System.out.println("You clicked card number " + position);
+            }
+        });
     }
 
     @Override
