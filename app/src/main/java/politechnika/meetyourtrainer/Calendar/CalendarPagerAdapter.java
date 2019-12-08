@@ -26,7 +26,7 @@ public class CalendarPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public String getPageTitle(int position) {
-        if(position == 0) return "Day";
+        if(position == 0) return "Today";
         else if (position == 1) return "This Week";
         else return "Period of time";
     }

@@ -59,6 +59,4 @@ public class MarkersProvider {
         return this.markers;
     }
 
-    ;
-
 }

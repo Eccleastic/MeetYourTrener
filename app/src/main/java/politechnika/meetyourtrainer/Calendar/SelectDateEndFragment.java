@@ -24,11 +24,22 @@ public class SelectDateEndFragment extends DialogFragment implements DatePickerD
     }
 
     public void onDateSet(DatePicker view, int yy, int mm, int dd) {
-        populateSetDate(yy, mm+1, dd);
+        populateSetDate(yy, mm + 1, dd);
     }
+
     public void populateSetDate(int year, int month, int day) {
-        TextView date= (TextView)getActivity(). findViewById(R.id.dateEnd);
-        date.setText(day+"."+month+"."+year);
+        String dd, mm;
+        if (day < 10)
+            dd = "0" + day;
+        else
+            dd = Integer.toString(day);
+        if (month < 10)
+            mm = "0" + month;
+        else
+            mm = Integer.toString(month);
+
+        TextView date = (TextView) getActivity().findViewById(R.id.dateEnd);
+        date.setText(dd + "." + mm + "." + year);
     }
 
 }

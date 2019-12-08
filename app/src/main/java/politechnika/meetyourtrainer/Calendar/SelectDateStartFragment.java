@@ -27,8 +27,18 @@ public class SelectDateStartFragment extends DialogFragment implements DatePicke
         populateSetDate(yy, mm+1, dd);
     }
     public void populateSetDate(int year, int month, int day) {
-        TextView date= (TextView)getActivity(). findViewById(R.id.dateStart);
-        date.setText(day+"."+month+"."+year);
+        String dd, mm;
+        if (day < 10)
+            dd = "0" + day;
+        else
+            dd = Integer.toString(day);
+        if (month < 10)
+            mm = "0" + month;
+        else
+            mm = Integer.toString(month);
+
+        TextView date = (TextView) getActivity().findViewById(R.id.dateStart);
+        date.setText(dd + "." + mm + "." + year);
     }
 
 }
