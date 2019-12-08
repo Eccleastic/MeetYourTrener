@@ -1,5 +1,6 @@
 package politechnika.meetyourtrainer.Calendar;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,10 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -40,6 +45,7 @@ public class CalendarPeriodTimeView extends Fragment {
         dateStart = view.findViewById(R.id.dateStart);
         dateEnd = view.findViewById(R.id.dateEnd);
         submitButton = view.findViewById(R.id.submitButton);
+        recyclerView = view.findViewById(R.id.recyclerView);
 
         dateStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,16 +66,34 @@ public class CalendarPeriodTimeView extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
+
                 MeetingProvider mp = new MeetingProvider(dateStart.getText().toString(), dateEnd.getText().toString());
-                mp.getDataFromApi(getActivity());
+                ArrayList<CardModel> models = new ArrayList<>();
+                mp.getDataFromApi(getActivity(), new ServerCallback() {
+
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+                        for (int i = 0; i < response.length(); i++) {
+                            CardModel m = new CardModel();
+                            JSONObject obj = response.getJSONObject(i);
+                            m.setDesctiption(obj.getString("note") + ",\n" + obj.getString("meeting_address") + ",\n" + obj.getString("meeting_date"));
+                            m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
+                            m.setImg(R.drawable.face);
+                            models.add(m);
+                            System.out.println(response.getJSONObject(i).toString());
+                        }
+                        myAdapter = new MyAdapter(getActivity(), models);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                        recyclerView.setAdapter(myAdapter);
+                        dialog.dismiss();
+                    }
+                });
             }
         });
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-
-        myAdapter = new MyAdapter(getActivity().getApplicationContext(), getList());
-        recyclerView.setAdapter(myAdapter);
+        //myAdapter = new MyAdapter(getActivity()), getList());
+        //recyclerView.setAdapter(myAdapter);
 
         return view;
     }

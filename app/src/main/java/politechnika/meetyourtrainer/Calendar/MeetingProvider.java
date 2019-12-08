@@ -1,5 +1,6 @@
 package politechnika.meetyourtrainer.Calendar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
@@ -18,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import politechnika.meetyourtrainer.Calendar.ServerCallback;
 import politechnika.meetyourtrainer.R;
 
 public class MeetingProvider {
@@ -27,6 +29,8 @@ public class MeetingProvider {
 
     ArrayList<CardModel> models = new ArrayList<>();
 
+    MyAdapter myAdapter;
+
 
     public MeetingProvider(String dateStart, String dateEnd) {
         this.dateStart = dateStart;
@@ -34,7 +38,7 @@ public class MeetingProvider {
     }
 
 
-    public void getDataFromApi(Context c) {
+    public void getDataFromApi(final Context c, final ServerCallback callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("http://meetyourtrenerspringfunctions.azurewebsites.net").append("/api/getMeetingsFromDateToDate?code=rSElQLtf");
@@ -47,7 +51,7 @@ public class MeetingProvider {
         String url = stringBuilder.toString();
         JsonArrayRequest jor = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
             try {
-                System.out.println(response.length());
+                /*System.out.println(response.length());
                 for (int i = 0; i < response.length(); i++) {
                     CardModel m = new CardModel();
                     JSONObject obj = response.getJSONObject(i);
@@ -57,6 +61,9 @@ public class MeetingProvider {
                     models.add(m);
                     System.out.println(response.getJSONObject(i).toString());
                 }
+                myAdapter = new MyAdapter(c, models);
+                dialog.dismiss();*/
+                callback.onSuccess(response); // call call back function here
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -83,5 +90,9 @@ public class MeetingProvider {
         );
         RequestQueue q = Volley.newRequestQueue(c);
         q.add(jor);
+    }
+
+    public MyAdapter getMyAdapter(){
+        return myAdapter;
     }
 }
