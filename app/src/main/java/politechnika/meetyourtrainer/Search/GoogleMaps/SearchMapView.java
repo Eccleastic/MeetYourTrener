@@ -30,6 +30,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.Random;
 
@@ -114,6 +117,18 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
         //LOAD MARKERS FROM MARKERS PROVIDER CLASS
         MarkersProvider markersFromAPI = new MarkersProvider(0,0,0);
         markersFromAPI.createMarkers();
+        int meetingId = 1;
+        markersFromAPI.getMarkerById(meetingId, getActivity(), new ServerCallback() {
+            @Override
+            public void onSuccess(JSONObject result) throws JSONException {
+                LatLng coordinates = new LatLng(result.getDouble("latitude"), result.getDouble("longitude"));
+                String title = result.getString("meeting_address").replace(" ", "");
+                String description = result.getString("note").replace(" ", "") + " " + result.getInt("price") + "zl/h"
+                        + result.getString("meeting_date").replace(" ", "");
+                MarkerOptions marker = new MarkerOptions().position(coordinates).title(title).snippet(description);
+                googleMap.addMarker(marker);
+            }
+        });
         List<MarkerOptions> markers = markersFromAPI.getMarkers();
         for (MarkerOptions markerOption : markers) {
             googleMap.addMarker(markerOption);
