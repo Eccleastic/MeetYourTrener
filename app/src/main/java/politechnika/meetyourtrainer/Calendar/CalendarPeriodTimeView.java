@@ -50,7 +50,7 @@ public class CalendarPeriodTimeView extends Fragment {
         dateStart = view.findViewById(R.id.dateStart);
         dateEnd = view.findViewById(R.id.dateEnd);
         submitButton = view.findViewById(R.id.submitButton);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerViewPeriod);
 
         String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
         dateStart.setText(currentDate);

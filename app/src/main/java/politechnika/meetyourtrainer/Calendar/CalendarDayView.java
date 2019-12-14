@@ -40,7 +40,7 @@ public class CalendarDayView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_calendar_day, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerViewDay);
         String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
 

@@ -42,7 +42,6 @@ public class MeetingProvider {
         stringBuilder.append(dateStart).append("&enddate=").append(dateEnd);
 
         apiData = stringBuilder.toString();
-        System.out.println(apiData);
 
         String url = stringBuilder.toString();
         JsonArrayRequest jor = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
