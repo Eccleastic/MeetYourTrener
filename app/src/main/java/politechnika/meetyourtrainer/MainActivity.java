@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import politechnika.meetyourtrainer.Ads.FragmentAds;
 import politechnika.meetyourtrainer.Calendar.FragmentCalendar;
 import politechnika.meetyourtrainer.Search.FragmentSearch;
 import politechnika.meetyourtrainer.UserProfile.FragmentUserProfile;

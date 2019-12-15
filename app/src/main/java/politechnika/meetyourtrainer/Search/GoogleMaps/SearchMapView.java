@@ -36,7 +36,7 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Random;
 
-import politechnika.meetyourtrainer.AdProvider;
+import politechnika.meetyourtrainer.Ads.AdProvider;
 import politechnika.meetyourtrainer.Profile.ProfileActivity;
 import politechnika.meetyourtrainer.R;
 

@@ -1,4 +1,4 @@
-package politechnika.meetyourtrainer;
+package politechnika.meetyourtrainer.Ads;
 
 public class AdProvider {
 
