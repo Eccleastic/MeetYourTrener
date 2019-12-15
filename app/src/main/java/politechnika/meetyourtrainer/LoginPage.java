@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,9 @@ public class LoginPage extends AppCompatActivity {
     EditText userPassword;
     Button loginButton;
     Button signInButton;
+    Button button_app_info;
+
+    TextView textView_log_in_problems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,13 @@ public class LoginPage extends AppCompatActivity {
         signInButton = (Button) findViewById(R.id.button_sign_in);
         userPassword = (EditText) findViewById(R.id.editText_password);
         emailAddress = (EditText) findViewById(R.id.editText_login);
+        textView_log_in_problems = findViewById(R.id.textView_log_in_problems);
+        button_app_info = findViewById(R.id.button_app_info);
 
         Login();
-
         SignIn();
+        LogInProblems();
+        AppInfo();
 
     }
 
@@ -94,9 +101,27 @@ public class LoginPage extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this, SignUpPage.class));
+                startActivity(new Intent(LoginPage.this, RegisterActivity.class));
             }
         });
 
+    }
+
+    private void LogInProblems() {
+        textView_log_in_problems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginPage.this, LogInProblems.class));
+            }
+        });
+    }
+
+    private void AppInfo() {
+        button_app_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginPage.this, AppInfo.class));
+            }
+        });
     }
 }

@@ -39,8 +39,7 @@
             android:name=".Search.GoogleMaps.MapsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".SignUpPage"></activity>
-<!--        <activity android:name=".MainActivity"></activity>-->
+        <!--        <activity android:name=".MainActivity"></activity>-->
         <!--
             The API key for Google Maps-based APIs is defined as a string resource.
             (See the file "res/values/google_maps_api.xml").
@@ -53,6 +52,8 @@
         <activity android:name=".FilterActivity"></activity>
         <activity android:name=".Profile.ProfileActivity"></activity>
         <activity android:name=".MeetingInfoActivity"></activity>
+        <activity android:name=".LogInProblems"></activity>
+        <activity android:name=".AppInfo"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
