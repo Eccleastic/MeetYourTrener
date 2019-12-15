@@ -1,4 +1,4 @@
-package politechnika.meetyourtrainer.GoogleMaps;
+package politechnika.meetyourtrainer.Search.GoogleMaps;
 
 import android.content.pm.PackageManager;
 import android.location.Location;

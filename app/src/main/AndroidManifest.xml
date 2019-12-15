@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GoogleMaps.MapsActivity"
+            android:name=".Search.GoogleMaps.MapsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".SignUpPage"></activity>
@@ -52,6 +52,7 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".FilterActivity"></activity>
         <activity android:name=".Profile.ProfileActivity"></activity>
+        <activity android:name=".MeetingInfoActivity"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

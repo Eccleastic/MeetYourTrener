@@ -1,4 +1,4 @@
-package politechnika.meetyourtrainer;
+package politechnika.meetyourtrainer.Search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +15,10 @@ import org.json.JSONObject;
 import politechnika.meetyourtrainer.Profile.ProfileActivity;
 import politechnika.meetyourtrainer.Profile.ProfileProvider;
 import politechnika.meetyourtrainer.Profile.ServerCallback;
+import politechnika.meetyourtrainer.R;
 
 public class SearchListView extends Fragment {
-    //SearchListViewModel slvm;
+
     private TextView name;
     private TextView description;
     private TextView name2;
@@ -34,7 +35,6 @@ public class SearchListView extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //slvm = ViewModelProviders.of(getActivity()).get(SearchListViewModel.class);
         setRetainInstance(true);
     }
 

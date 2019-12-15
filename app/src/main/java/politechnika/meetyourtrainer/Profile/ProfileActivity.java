@@ -22,11 +22,6 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView messageButton;
     Button backButton;
 
-    String name;
-    String rate = "3.1";
-    String description;
-    String phone = "224-444-444";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
