@@ -10,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import politechnika.meetyourtrainer.Calendar.FragmentCalendar;
 import politechnika.meetyourtrainer.Search.FragmentSearch;
+import politechnika.meetyourtrainer.UserProfile.FragmentUserProfile;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,11 +29,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.item_calendar:
                         selectedFragment = new FragmentCalendar();
                         break;
-                    case R.id.item_contacts:
+                    case R.id.item_ads:
                         selectedFragment = new FragmentContact();
                         break;
-                    case R.id.item_settings:
-                        selectedFragment = new FragmentSettings();
+                    case R.id.item_myprofile:
+                        selectedFragment = new FragmentUserProfile();
                         break;
                 }
 

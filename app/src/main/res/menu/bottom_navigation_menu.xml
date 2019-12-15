@@ -17,12 +17,12 @@
         android:title="Calendar" />
 
     <item
-        android:id="@+id/item_contacts"
-        android:icon="@drawable/ic_contact_black"
-        android:title="Contacts" />
+        android:id="@+id/item_ads"
+        android:icon="@drawable/marker_android_icon"
+        android:title="Ads" />
 
     <item
-        android:id="@+id/item_settings"
-        android:icon="@drawable/ic_settings_black"
-        android:title="Settings" />
+        android:id="@+id/item_myprofile"
+        android:icon="@drawable/iconxd"
+        android:title="Profile" />
 </menu>

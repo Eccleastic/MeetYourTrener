@@ -115,12 +115,13 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
         googleMap.setOnInfoWindowClickListener(this);
 
         //LOAD MARKERS FROM MARKERS PROVIDER CLASS
-        MarkersProvider markersFromAPI = new MarkersProvider(0,0,0);
-        markersFromAPI.createMarkers();
+        MarkersProvider markersFromAPI = new MarkersProvider(0, 0, 0);
+        markersFromAPI.customMarkers();
         int meetingId = 1;
         markersFromAPI.getMarkerById(meetingId, getActivity(), new ServerCallback() {
             @Override
             public void onSuccess(JSONObject result) throws JSONException {
+
                 LatLng coordinates = new LatLng(result.getDouble("latitude"), result.getDouble("longitude"));
                 String title = result.getString("meeting_address").replace(" ", "");
                 String description = result.getString("note").replace(" ", "") + " " + result.getInt("price") + "zl/h"
