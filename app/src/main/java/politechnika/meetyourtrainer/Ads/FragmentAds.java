@@ -14,7 +14,7 @@ import politechnika.meetyourtrainer.R;
 import politechnika.meetyourtrainer.UserProfile.UserProfilePagerAdapter;
 
 public class FragmentAds extends Fragment {
-    AdsPagerAdaper adsPagerAdaper;
+    AdsPagerAdapter adsPagerAdaper;
     ViewPager viewPager;
 
     @Override
