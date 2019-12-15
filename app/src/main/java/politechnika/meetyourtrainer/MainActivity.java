@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new FragmentCalendar();
                         break;
                     case R.id.item_ads:
-                        selectedFragment = new FragmentContact();
+                        selectedFragment = new FragmentAds();
                         break;
                     case R.id.item_myprofile:
                         selectedFragment = new FragmentUserProfile();
