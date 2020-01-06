@@ -50,7 +50,7 @@ public class MarkersProvider {
     void getMarkersByDistanceAndKeyWord() {
     }
 
-    public void getMarkerById(int id, final Context c, final ServerCallback callback){
+    public void getMarkerById(int id, final Context c, final ServerCallback callback) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api")
                 .append("/getMeeting?code=YsZKBGmTdpa8Vsp4/Slc6QhqUgnTkUhQw2/R6CM0yauwPkVTxAzRNA==&meetingid=")
@@ -95,7 +95,7 @@ public class MarkersProvider {
     }
 
 
-    void createMarkers() {
+    void customMarkers() {
         LatLng budynek_CTI = new LatLng(51.746956, 19.455958);
         LatLng budynek_centrum_sportu = new LatLng(51.746256, 19.451444);
         LatLng budynek_sukcesja = new LatLng(51.749201, 19.448128);

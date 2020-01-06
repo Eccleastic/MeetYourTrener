@@ -61,6 +61,7 @@ public class APIHandler {
         try {
             String stringUrl = USER_CREDENTIAL_STRING + "&name=" + userName + "&password=" + userPassword + "";
             JSONObject jsonObject = readJsonFromUrl(stringUrl);
+            System.out.println(jsonObject.getInt("user_id"));
             if (jsonObject.get("loginSucessful").equals(true))
                 return true;
         } catch (IOException | JSONException e) {

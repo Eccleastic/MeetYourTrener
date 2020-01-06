@@ -4,10 +4,11 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/messagesText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="@string/fragment_message"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:textSize="30sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
