@@ -1,4 +1,4 @@
-package politechnika.meetyourtrainer;
+package politechnika.meetyourtrainer.Chat;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import politechnika.meetyourtrainer.R;
 
 public class FragmentMessage extends Fragment {
     TextView messagesText;

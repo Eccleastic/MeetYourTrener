@@ -52,8 +52,8 @@
         <activity android:name=".FilterActivity"></activity>
         <activity android:name=".Profile.ProfileActivity"></activity>
         <activity android:name=".MeetingInfoActivity"></activity>
-        <activity android:name=".LogInProblems"></activity>
-        <activity android:name=".AppInfo"></activity>
+        <activity android:name=".LoginProblemActivity"></activity>
+        <activity android:name=".AppInfoActivity"></activity>
         <activity android:name=".AdInfoActivity"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -82,6 +82,7 @@ public class LoginPage extends AppCompatActivity {
                 APIHandler.userAuthentication(emailAddress.getText().toString(), userPassword.getText().toString(), LoginPage.this, new ServerCallback() {
                     @Override
                     public void onSuccess(JSONObject result) throws JSONException {
+                        System.out.println(result.get("user_id"));
                         if (result.getBoolean("loginSucessful")) {
                             startActivity(intent);
                         } else {
@@ -111,7 +112,7 @@ public class LoginPage extends AppCompatActivity {
         textView_log_in_problems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this, LogInProblems.class));
+                startActivity(new Intent(LoginPage.this, LoginProblemActivity.class));
             }
         });
     }
@@ -120,7 +121,7 @@ public class LoginPage extends AppCompatActivity {
         button_app_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this, AppInfo.class));
+                startActivity(new Intent(LoginPage.this, AppInfoActivity.class));
             }
         });
     }
