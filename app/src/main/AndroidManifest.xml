@@ -54,6 +54,7 @@
         <activity android:name=".MeetingInfoActivity"></activity>
         <activity android:name=".LogInProblems"></activity>
         <activity android:name=".AppInfo"></activity>
+        <activity android:name=".AdInfoActivity"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

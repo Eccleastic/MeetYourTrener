@@ -22,6 +22,7 @@ public class AdsMyAds extends Fragment {
 
     RecyclerView recyclerView;
     MyAdapter myAdapter;
+    String trener_id;
 
     public static AdsMyAds newInstance() {
         return new AdsMyAds();
@@ -39,11 +40,12 @@ public class AdsMyAds extends Fragment {
         View view = inflater.inflate(R.layout.fragment_myads, container, false);
         recyclerView = view.findViewById(R.id.recyclerViewMyAds);
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
+        this.trener_id = "2";
         AdInfoProvider adInfo = new AdInfoProvider();
         ArrayList<CardModel> models = new ArrayList<>();
-        adInfo.getDataFromApi(getActivity(), new ServerCallback() {
+        adInfo.getAdsByTrenerId(getActivity(),trener_id, new ServerCallback() {
             @Override
-            public void onSuccess(JSONObject result) throws JSONException {
+            public void onSuccess(JSONArray result) throws JSONException {
                 if (result.length() == 0) {
                     System.out.println("RESULT LENGTH: 0");
                     CardModel m = new CardModel();
@@ -52,14 +54,23 @@ public class AdsMyAds extends Fragment {
                     m.setImgURL("");
                     models.add(m);
                 } else {
-                    System.out.println("RESULT LENGTH:" + result.length());
-                    CardModel m = new CardModel();
-                    JSONObject obj = result;
-                    m.setDesctiption(obj.getString("description") + " " + obj.getString("price"));
-                    m.setTitle(obj.getString("title"));
-                    m.setImgURL(obj.getString("user_photo"));
-                    models.add(m);
-                    System.out.println(result.toString());
+                    for(int i=0; i<result.length(); i++) {
+                        CardModel m = new CardModel();
+                        JSONObject obj = result.getJSONObject(i);
+                        m.setDesctiption(obj.getString("ad_description"));
+                        m.setTitle(obj.getString("title"));
+                        m.setImgURL(obj.getString("photo_link"));
+                        m.setAd_id(obj.getString("advertisement_id"));
+                        m.setAddress(obj.getString("address"));
+                        m.setName(obj.getString("trener_name"));
+                        m.setPrice(String.valueOf(obj.getDouble("price")));
+                        m.setTrener_id(String.valueOf(obj.getInt("trener_id")));
+                        m.setEmail(obj.getString("trener_email"));
+                        m.setPhone(obj.getString("trener_phone"));
+                        m.setDate(obj.getString("date") + " " + obj.getString("time"));
+                        models.add(m);
+                        System.out.println(result.get(i).toString());
+                    }
 
                 }
                 myAdapter = new MyAdapter(getActivity(), models);

@@ -1,8 +1,8 @@
 package politechnika.meetyourtrainer.Ads;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +11,15 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
+import politechnika.meetyourtrainer.AdInfoActivity;
 import politechnika.meetyourtrainer.R;
 
 public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter<MyHolder> {
@@ -46,8 +50,18 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //implement onClick
-                System.out.println("You clicked card number " + position);
+                Intent intent = new Intent(c, AdInfoActivity.class);
+                intent.putExtra("description", models.get(position).getDesctiption());
+                intent.putExtra("title", models.get(position).getTitle());
+                intent.putExtra("rate", "4.70");
+                intent.putExtra("email", models.get(position).getEmail());
+                intent.putExtra("phone",  models.get(position).getPhone());
+                intent.putExtra("price",  models.get(position).getPrice());
+                intent.putExtra("address",  models.get(position).getAddress());
+                intent.putExtra("name",  models.get(position).getName());
+                intent.putExtra("photoURL", models.get(position).getImgURL());
+                intent.putExtra("date", models.get(position).getDate());
+                c.startActivity(intent);
             }
         });
     }
