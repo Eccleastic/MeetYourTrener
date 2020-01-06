@@ -122,24 +122,11 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
 
         googleMap.setOnInfoWindowClickListener(this);
 
-        //LOAD MARKERS FROM MARKERS PROVIDER CLASS
+        //LOAD MARKERS FROM MARKERS PROVIDER CLASS(custom markers)
         MarkersProvider markersFromAPI = new MarkersProvider(0, 0, 0);
         markersFromAPI.customMarkers();
-        /*
-        int meetingId = 1;
-        markersFromAPI.getMarkerById(meetingId, getActivity(), new ServerCallback() {
-            @Override
-            public void onSuccess(JSONObject result) throws JSONException {
 
-                LatLng coordinates = new LatLng(result.getDouble("latitude"), result.getDouble("longitude"));
-                String title = result.getString("meeting_address").replace(" ", "");
-                String description = result.getString("note").replace(" ", "") + " " + result.getInt("price") + "zl/h"
-                        + result.getString("meeting_date").replace(" ", "");
-                MarkerOptions marker = new MarkerOptions().position(coordinates).title(title).snippet(description);
-                googleMap.addMarker(marker);
-            }
-        });
-         */
+        //LOAD MARKERS FROM API
         loadMarkersFromApi(googleMap);
         List<MarkerOptions> markers = markersFromAPI.getMarkers();
         for (MarkerOptions markerOption : markers) {
