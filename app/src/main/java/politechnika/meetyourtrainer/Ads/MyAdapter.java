@@ -54,7 +54,11 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
         String address = "\uD83D\uDCCD" + models.get(position).getAddress();
         holder.address.setText(address);
 
-        holder.date.setText(models.get(position).getDate());
+        String price =  "\uD83D\uDCB0" + models.get(position).getPrice() + "zł";
+        holder.price.setText(price);
+
+        String date = "\uD83D\uDCC5" + models.get(position).getDate();
+        holder.date.setText(date);
 
         //holder.image.setImageDrawable(models.get().getImgURL());
         setBitmapFromURL(models.get(position).getImgURL(), holder.image);

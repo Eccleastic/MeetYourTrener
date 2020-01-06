@@ -11,7 +11,7 @@ import politechnika.meetyourtrainer.R;
 
 public class MyHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
     ImageView image;
-    TextView title, description, address, date;
+    TextView title, description, address, date, price;
     CardView cardView;
 
     public MyHolder(@NonNull View itemView) {
@@ -21,6 +21,7 @@ public class MyHolder extends androidx.recyclerview.widget.RecyclerView.ViewHold
         title = itemView.findViewById(R.id.title);
         address = itemView.findViewById(R.id.address);
         date = itemView.findViewById(R.id.date);
+        price = itemView.findViewById(R.id.price);
         description = itemView.findViewById(R.id.description);
         cardView = itemView.findViewById(R.id.cardView);
     }
