@@ -4,9 +4,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import politechnika.meetyourtrainer.Search.GoogleMaps.SearchMapView;
-import politechnika.meetyourtrainer.Search.SearchListView;
-
 public class UserProfilePagerAdapter extends FragmentStatePagerAdapter {
 
     public UserProfilePagerAdapter(FragmentManager fm) {

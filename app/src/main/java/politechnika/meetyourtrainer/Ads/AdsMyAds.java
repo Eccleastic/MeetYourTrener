@@ -37,8 +37,8 @@ public class AdsMyAds extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_myads, container, false);
-        recyclerView = view.findViewById(R.id.recyclerViewMyAds);
+        View view = inflater.inflate(R.layout.fragment_ads, container, false);
+        recyclerView = view.findViewById(R.id.recyclerViewAds);
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
         this.trener_id = "2";
         AdInfoProvider adInfo = new AdInfoProvider();
