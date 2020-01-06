@@ -293,8 +293,13 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
                     for(int i=0; i<result.length(); i++) {
                         JSONObject obj = result.getJSONObject(i);
                         LatLng coordinates = new LatLng(obj.getDouble("latitude"), obj.getDouble("longitude"));
-                        String title = obj.getString("title");
-                        String description = obj.getString("ad_description") + " " + obj.getDouble("price") + "zl/h" + obj.getString("date");
+                        String title = obj.getString("title") + " " + obj.getString("price") + "zł";
+                        String description;
+                        if(obj.getString("ad_description").length() > 20){
+                            description = obj.getString("ad_description").substring(0,19) + "... " +  obj.getString("date");
+                        } else {
+                            description = obj.getString("ad_description") + " " + obj.getString("date");
+                        }
                         Marker marker = googleMap.addMarker(new MarkerOptions().position(coordinates).title(title).snippet(description));
                         mHashMap.put(marker, obj.getInt("advertisement_id"));
                     }

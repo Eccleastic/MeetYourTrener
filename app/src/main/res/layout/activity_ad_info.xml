@@ -12,7 +12,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -26,7 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars[11]" />
+                tools:srcCompat="@tools:sample/avatars[11]"
+                android:foreground="@drawable/rounded_fg"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,6 +38,8 @@
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:text="Imię i Nazwisko"
                     android:textAlignment="center"
@@ -54,6 +56,8 @@
                         android:id="@+id/ratePhoto"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/stars4" />
 
@@ -159,6 +163,7 @@
             android:id="@+id/backButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:layout_weight="1"
             android:text="back" />
     </LinearLayout>

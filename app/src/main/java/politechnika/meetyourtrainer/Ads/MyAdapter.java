@@ -41,7 +41,21 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.title.setText(models.get(position).getTitle());
-        holder.description.setText(models.get(position).getDescription());
+
+        String description;
+        if(models.get(position).getDescription().length() > 60){
+            description = models.get(position).getDescription().substring(0,60);
+            description += "...";
+        } else {
+            description = models.get(position).getDescription();
+        }
+        holder.description.setText(description);
+
+        String address = "\uD83D\uDCCD" + models.get(position).getAddress();
+        holder.address.setText(address);
+
+        holder.date.setText(models.get(position).getDate());
+
         //holder.image.setImageDrawable(models.get().getImgURL());
         setBitmapFromURL(models.get(position).getImgURL(), holder.image);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
