@@ -62,7 +62,7 @@ public class AdInfoProvider {
     public void getAdByAdId(final Context c,String ad_id, final ServerCallbackTwo callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("https://http://meetyourtrenerspringfunctions.azurewebsites.net/api/getAdvertisementByID?code=5kQw/Ozkaa39pwcylYOgH4vSRuIIqySNah1dDJMU4hq2ROgeW0c4tQ==&advertisementid=");
+        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/getAdvertisementByID?code=5kQw/Ozkaa39pwcylYOgH4vSRuIIqySNah1dDJMU4hq2ROgeW0c4tQ==&advertisementid=");
         stringBuilder.append(ad_id);
 
         apiData = stringBuilder.toString();

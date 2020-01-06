@@ -11,9 +11,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -44,14 +41,14 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.title.setText(models.get(position).getTitle());
-        holder.description.setText(models.get(position).getDesctiption());
+        holder.description.setText(models.get(position).getDescription());
         //holder.image.setImageDrawable(models.get().getImgURL());
         setBitmapFromURL(models.get(position).getImgURL(), holder.image);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(c, AdInfoActivity.class);
-                intent.putExtra("description", models.get(position).getDesctiption());
+                intent.putExtra("description", models.get(position).getDescription());
                 intent.putExtra("title", models.get(position).getTitle());
                 intent.putExtra("rate", "4.70");
                 intent.putExtra("email", models.get(position).getEmail());

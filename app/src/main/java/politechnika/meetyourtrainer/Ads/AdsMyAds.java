@@ -50,14 +50,14 @@ public class AdsMyAds extends Fragment {
                     System.out.println("RESULT LENGTH: 0");
                     CardModel m = new CardModel();
                     m.setTitle("You have no Ads");
-                    m.setDesctiption("");
+                    m.setDescription("");
                     m.setImgURL("");
                     models.add(m);
                 } else {
                     for(int i=0; i<result.length(); i++) {
                         CardModel m = new CardModel();
                         JSONObject obj = result.getJSONObject(i);
-                        m.setDesctiption(obj.getString("ad_description"));
+                        m.setDescription(obj.getString("ad_description"));
                         m.setTitle(obj.getString("title"));
                         m.setImgURL(obj.getString("photo_link"));
                         m.setAd_id(obj.getString("advertisement_id"));

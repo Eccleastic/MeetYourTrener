@@ -112,11 +112,11 @@ public class CardModel {
         this.title = title;
     }
 
-    public String getDesctiption() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDesctiption(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 }

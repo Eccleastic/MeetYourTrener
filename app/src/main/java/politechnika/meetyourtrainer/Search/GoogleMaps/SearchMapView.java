@@ -1,5 +1,6 @@
 package politechnika.meetyourtrainer.Search.GoogleMaps;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -30,13 +31,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import politechnika.meetyourtrainer.Ads.AdProvider;
+import politechnika.meetyourtrainer.AdInfoActivity;
+import politechnika.meetyourtrainer.Ads.AdInfoProvider;
+import politechnika.meetyourtrainer.Ads.CardModel;
+import politechnika.meetyourtrainer.Ads.ServerCallbackTwo;
 import politechnika.meetyourtrainer.Profile.ProfileActivity;
 import politechnika.meetyourtrainer.R;
 
@@ -54,6 +60,8 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
     boolean wasCentered = false;
 
     Thread threadLocalization;
+
+    private HashMap<Marker, Integer> mHashMap = new HashMap<Marker, Integer>();
 
 
     public static SearchMapView newInstance() {
@@ -117,6 +125,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
         //LOAD MARKERS FROM MARKERS PROVIDER CLASS
         MarkersProvider markersFromAPI = new MarkersProvider(0, 0, 0);
         markersFromAPI.customMarkers();
+        /*
         int meetingId = 1;
         markersFromAPI.getMarkerById(meetingId, getActivity(), new ServerCallback() {
             @Override
@@ -130,6 +139,8 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
                 googleMap.addMarker(marker);
             }
         });
+         */
+        loadMarkersFromApi(googleMap);
         List<MarkerOptions> markers = markersFromAPI.getMarkers();
         for (MarkerOptions markerOption : markers) {
             googleMap.addMarker(markerOption);
@@ -258,17 +269,52 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Intent intent = new Intent(getActivity(), ProfileActivity.class);
-        AdProvider ad = new AdProvider("1");
-        ad.setTitle(marker.getTitle());
-        ad.setDescription(marker.getSnippet());
-        Random r = new Random();
-        double randomValue = 1.0 + (5.0 - 1.0) * r.nextDouble();
-        ad.setRating(randomValue);
-        intent.putExtra("description", ad.getDescription());
-        intent.putExtra("title", ad.getTitle());
-        intent.putExtra("rate", ad.getRating());
-        startActivity(intent);
+        boolean isHere = mHashMap.containsKey(marker);
+        String ad_id = String.valueOf(mHashMap.get(marker));
+        if(!isHere) {
+            return;
+        }
+        final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
+        AdInfoProvider adInfo = new AdInfoProvider();
+        Intent intent = new Intent(getActivity(), AdInfoActivity.class);
+        adInfo.getAdByAdId(getActivity(), ad_id, new ServerCallbackTwo() {
+            @Override
+            public void onSuccess(JSONObject result) throws JSONException {
+                intent.putExtra("description", result.getString("ad_description"));
+                intent.putExtra("title", result.getString("title"));
+                intent.putExtra("rate", "4.75");
+                intent.putExtra("email", result.getString("trener_email"));
+                intent.putExtra("phone",  result.getString("trener_phone"));
+                intent.putExtra("price",  String.valueOf(result.getDouble("price")));
+                intent.putExtra("address",  result.getString("address"));
+                intent.putExtra("name",  result.getString("trener_name"));
+                intent.putExtra("photoURL", result.getString("photo_link"));
+                intent.putExtra("date", result.getString("date"));
+                dialog.dismiss();
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void loadMarkersFromApi(GoogleMap googleMap){
+        AdInfoProvider ads = new AdInfoProvider();
+        String id = "2";
+        ads.getAdsByTrenerId(getActivity(), id, new politechnika.meetyourtrainer.Ads.ServerCallback() {
+            @Override
+            public void onSuccess(JSONArray result) throws JSONException {
+                if (result.length() > 0) {
+                    for(int i=0; i<result.length(); i++) {
+                        JSONObject obj = result.getJSONObject(i);
+                        LatLng coordinates = new LatLng(obj.getDouble("latitude"), obj.getDouble("longitude"));
+                        String title = obj.getString("title");
+                        String description = obj.getString("ad_description") + " " + obj.getDouble("price") + "zl/h" + obj.getString("date");
+                        Marker marker = googleMap.addMarker(new MarkerOptions().position(coordinates).title(title).snippet(description));
+                        mHashMap.put(marker, obj.getInt("advertisement_id"));
+                    }
+                }
+            }
+        });
+
     }
 }
 
