@@ -70,7 +70,7 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
                 intent.putExtra("title", models.get(position).getTitle());
                 intent.putExtra("rate", "4.70");
                 intent.putExtra("email", models.get(position).getEmail());
-                intent.putExtra("phone",  models.get(position).getPhone());
+                intent.putExtra("phone",  models.get(position).getPhone().trim());
                 intent.putExtra("price",  models.get(position).getPrice());
                 intent.putExtra("address",  models.get(position).getAddress());
                 intent.putExtra("name",  models.get(position).getName());

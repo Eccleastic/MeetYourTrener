@@ -37,13 +37,10 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import politechnika.meetyourtrainer.AdInfoActivity;
 import politechnika.meetyourtrainer.Ads.AdInfoProvider;
-import politechnika.meetyourtrainer.Ads.CardModel;
 import politechnika.meetyourtrainer.Ads.ServerCallbackTwo;
-import politechnika.meetyourtrainer.Profile.ProfileActivity;
 import politechnika.meetyourtrainer.R;
 
 public class SearchMapView extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -78,7 +75,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mMapView = (MapView) mView.findViewById(R.id.map);
+        mMapView = (MapView) mView.findViewById(R.id.directions);
         if (mMapView != null) {
             mMapView.onCreate(null);
             mMapView.onResume();
