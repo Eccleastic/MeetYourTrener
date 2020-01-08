@@ -76,6 +76,7 @@ public class UserProfileMyProfileView extends Fragment {
         phone = view.findViewById(R.id.phone);
         message = view.findViewById(R.id.message);
         backButton = view.findViewById(R.id.backButton);
+        backButton.setVisibility(View.GONE);
 
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
         result = this.getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
