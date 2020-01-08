@@ -9,18 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import politechnika.meetyourtrainer.R;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView profileName;
+    TextView name;
     TextView rating;
-    TextView seeOpinions;
-    TextView profileDescription;
-    ImageView phoneButton;
-    ImageView messageButton;
+    ImageView phone;
+    ImageView message;
+    ImageView ratePhoto;
     Button backButton;
+    ViewPager viewPager;
 
 
     @Override
@@ -29,20 +30,20 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         Bundle b = getIntent().getExtras();
 
-        profileName = findViewById(R.id.profileName);
-        rating = findViewById(R.id.rating);
-        seeOpinions = findViewById(R.id.seeOpinions);
-        profileDescription = findViewById(R.id.profileDescription);
-
-        phoneButton = findViewById(R.id.phoneButton);
-        messageButton = findViewById(R.id.messageButton);
+        name = findViewById(R.id.name);
+        rating = findViewById(R.id.rate);
+        phone = findViewById(R.id.phone);
+        message = findViewById(R.id.message);
         backButton = findViewById(R.id.backButton);
+        viewPager = findViewById(R.id.pager);
 
+        /*
         if (getIntent().hasExtra("title") && getIntent().hasExtra("description") && getIntent().hasExtra("rate")) {
-            profileName.setText(b.getString("title"));
+            name.setText(b.getString("title"));
             profileDescription.setText(b.getString("description"));
             rating.setText(String.format("%.2f", b.getDouble("rate")));
         }
+         */
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

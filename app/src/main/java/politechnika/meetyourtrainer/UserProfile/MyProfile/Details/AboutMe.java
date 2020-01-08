@@ -1,13 +1,13 @@
-package politechnika.meetyourtrainer.UserProfile;
+package politechnika.meetyourtrainer.UserProfile.MyProfile.Details;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-public class UserProfileMyProfileView extends Fragment {
+public class AboutMe extends Fragment {
 
-    public static UserProfileMyProfileView newInstance() {
-        return new UserProfileMyProfileView();
+    public static AboutMe newInstance() {
+        return new AboutMe();
     }
 
     @Override
