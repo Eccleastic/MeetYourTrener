@@ -101,6 +101,8 @@ public class AdInfoProvider {
     public void getAdByFilters(final Context c,String latitude, String longitude, String distance, String maxdate, String maxprice, final ServerCallback callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
+        if(distance.isEmpty())
+            distance = "10";
         double distance_in_m = Double.valueOf(distance) * 1000;
         stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/getFilteredAdvertisements?code=dOaxvaq90k/tTJacHXW/has6GCQ2oDSN8bpaw4HVXtgGt1XV5x5X9w==");
         stringBuilder.append("&lat=").append(latitude).append("&long=").append(longitude);
