@@ -50,8 +50,8 @@ public class FilterActivity extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(Activity.RESULT_OK, new Intent());
-                finish();
+                Intent intent = new Intent(getApplicationContext() , MainActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -83,7 +83,6 @@ public class SearchListView extends Fragment {
                         m.setPhone(obj.getString("trener_phone"));
                         m.setDate(obj.getString("date") + " " + obj.getString("time"));
                         models.add(m);
-                        System.out.println(result.get(i).toString());
                     }
 
                 }

@@ -111,7 +111,7 @@ public class UserProfileMyProfileView extends Fragment {
                 }
             }
         });
-        System.out.println(realName + age + sex + email + phoneNumber);
+
         return view;
     }
 
