@@ -1,6 +1,8 @@
 package politechnika.meetyourtrainer.Search;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +37,8 @@ public class SearchListView extends Fragment {
     private TextView user1profile;
     private TextView user2profile;
 
+    SharedPreferences sharedPreferences;
+
 
     public static SearchListView newInstance() {
         return new SearchListView();
@@ -52,11 +56,17 @@ public class SearchListView extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ads, container, false);
         recyclerView = view.findViewById(R.id.recyclerViewAds);
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
-        String trener_id = "2";
-        AdInfoProvider adInfo = new AdInfoProvider();
+        AdInfoProvider ads = new AdInfoProvider();
+        sharedPreferences = this.getActivity().getSharedPreferences("FilterData", Context.MODE_PRIVATE);
+        String latitude, longitude, distance, maxdate, maxprice;
+        latitude = sharedPreferences.getString("latitude", "51");
+        longitude = sharedPreferences.getString("longitude", "19");
+        distance = sharedPreferences.getString("distance", "10");
+        maxdate = sharedPreferences.getString("maxdate", "01.01.2023");
+        maxprice = sharedPreferences.getString("maxprice", "999.00");
         ArrayList<CardModel> models = new ArrayList<>();
 
-        adInfo.getAdsByTrenerId(getActivity(),trener_id, new politechnika.meetyourtrainer.Ads.ServerCallback() {
+        ads.getAdByFilters(getActivity(),latitude,longitude,distance,maxdate,maxprice, new politechnika.meetyourtrainer.Ads.ServerCallback() {
             @Override
             public void onSuccess(JSONArray result) throws JSONException {
                 if (result.length() == 0) {

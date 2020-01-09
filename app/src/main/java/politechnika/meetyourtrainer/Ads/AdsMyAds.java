@@ -1,6 +1,8 @@
 package politechnika.meetyourtrainer.Ads;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,8 @@ public class AdsMyAds extends Fragment {
     MyAdapter myAdapter;
     String trener_id;
 
+    SharedPreferences result;
+
     public static AdsMyAds newInstance() {
         return new AdsMyAds();
     }
@@ -40,7 +44,9 @@ public class AdsMyAds extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ads, container, false);
         recyclerView = view.findViewById(R.id.recyclerViewAds);
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
-        this.trener_id = "2";
+
+        result = this.getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        trener_id = result.getString("user_id", "-1");
         AdInfoProvider adInfo = new AdInfoProvider();
         ArrayList<CardModel> models = new ArrayList<>();
         adInfo.getAdsByTrenerId(getActivity(),trener_id, new ServerCallback() {

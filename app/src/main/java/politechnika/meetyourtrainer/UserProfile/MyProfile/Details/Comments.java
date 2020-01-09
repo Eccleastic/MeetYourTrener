@@ -1,14 +1,15 @@
-package politechnika.meetyourtrainer.UserProfile;
+package politechnika.meetyourtrainer.UserProfile.MyProfile.Details;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-public class UserProfileEditProfileView extends Fragment {
+public class Comments extends Fragment {
 
-    public static UserProfileEditProfileView newInstance() {
-        return new UserProfileEditProfileView();
+    public static Comments newInstance() {
+        return new Comments();
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

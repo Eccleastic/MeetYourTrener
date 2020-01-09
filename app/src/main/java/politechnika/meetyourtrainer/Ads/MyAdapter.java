@@ -54,7 +54,11 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
         String address = "\uD83D\uDCCD" + models.get(position).getAddress();
         holder.address.setText(address);
 
-        holder.date.setText(models.get(position).getDate());
+        String price =  "\uD83D\uDCB0" + models.get(position).getPrice() + "zł";
+        holder.price.setText(price);
+
+        String date = "\uD83D\uDCC5" + models.get(position).getDate();
+        holder.date.setText(date);
 
         //holder.image.setImageDrawable(models.get().getImgURL());
         setBitmapFromURL(models.get(position).getImgURL(), holder.image);
@@ -66,7 +70,7 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
                 intent.putExtra("title", models.get(position).getTitle());
                 intent.putExtra("rate", "4.70");
                 intent.putExtra("email", models.get(position).getEmail());
-                intent.putExtra("phone",  models.get(position).getPhone());
+                intent.putExtra("phone",  models.get(position).getPhone().trim());
                 intent.putExtra("price",  models.get(position).getPrice());
                 intent.putExtra("address",  models.get(position).getAddress());
                 intent.putExtra("name",  models.get(position).getName());

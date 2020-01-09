@@ -1,13 +1,13 @@
-package politechnika.meetyourtrainer.UserProfile;
+package politechnika.meetyourtrainer.UserProfile.MyProfile.Details;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-public class UserProfileEditProfileView extends Fragment {
+public class Ads extends Fragment {
 
-    public static UserProfileEditProfileView newInstance() {
-        return new UserProfileEditProfileView();
+    public static Ads newInstance() {
+        return new Ads();
     }
 
     @Override

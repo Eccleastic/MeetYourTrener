@@ -1,7 +1,9 @@
 package politechnika.meetyourtrainer.Search.GoogleMaps;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -37,13 +39,10 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import politechnika.meetyourtrainer.AdInfoActivity;
 import politechnika.meetyourtrainer.Ads.AdInfoProvider;
-import politechnika.meetyourtrainer.Ads.CardModel;
 import politechnika.meetyourtrainer.Ads.ServerCallbackTwo;
-import politechnika.meetyourtrainer.Profile.ProfileActivity;
 import politechnika.meetyourtrainer.R;
 
 public class SearchMapView extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -60,6 +59,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
     boolean wasCentered = false;
 
     Thread threadLocalization;
+    SharedPreferences sharedPreferences;
 
     private HashMap<Marker, Integer> mHashMap = new HashMap<Marker, Integer>();
 
@@ -78,7 +78,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mMapView = (MapView) mView.findViewById(R.id.map);
+        mMapView = (MapView) mView.findViewById(R.id.directions);
         if (mMapView != null) {
             mMapView.onCreate(null);
             mMapView.onResume();
@@ -212,6 +212,11 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
 
                             latitude = lastLocation.getLatitude();
                             longitude = lastLocation.getLongitude();
+                            sharedPreferences = getActivity().getSharedPreferences("FilterData", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("latitude", String.valueOf(latitude));
+                            editor.putString("longitude", String.valueOf(longitude));
+                            editor.apply();
 
                             if (!wasCentered) {
                                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17));
@@ -285,8 +290,15 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
 
     public void loadMarkersFromApi(GoogleMap googleMap){
         AdInfoProvider ads = new AdInfoProvider();
-        String id = "2";
-        ads.getAdsByTrenerId(getActivity(), id, new politechnika.meetyourtrainer.Ads.ServerCallback() {
+        sharedPreferences = this.getActivity().getSharedPreferences("FilterData", Context.MODE_PRIVATE);
+        String latitude, longitude, distance, maxdate, maxprice;
+        latitude = sharedPreferences.getString("latitude", "51");
+        longitude = sharedPreferences.getString("longitude", "19");
+        distance = sharedPreferences.getString("distance", "10");
+        maxdate = sharedPreferences.getString("maxdate", "01.01.2023");
+        maxprice = sharedPreferences.getString("maxprice", "999");
+
+        ads.getAdByFilters(getActivity(),latitude, longitude, distance, maxdate, maxprice, new politechnika.meetyourtrainer.Ads.ServerCallback() {
             @Override
             public void onSuccess(JSONArray result) throws JSONException {
                 if (result.length() > 0) {

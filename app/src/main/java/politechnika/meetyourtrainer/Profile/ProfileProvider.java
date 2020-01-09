@@ -20,26 +20,9 @@ import org.json.JSONObject;
 
 public class ProfileProvider {
 
-    String userId;
-    String username;
-    String name;
-    String lastname;
-    String description;
-    String email;
-    double rating;
-    String phoneNumber;
-    int sex;
-    int age;
-
-    public ProfileProvider(String username) {
-        this.username = username;
-    }
-
-    public void getDataFromApi(final Context c, final ServerCallback callback) {
+    public void getProfileById(final Context c, String user_id,  final ServerCallback callback) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/")
-                .append("api/getUserData?code=WfFchO6iJS2vWHuc7rrY95auXXaVBZJyY2i58r6oAM0QVkX9x3RuLw==&username=")
-                .append(this.username);
+        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/getUserTrenerDataByID?code=Eb48V9JOEenJBLbNRAFJj6s3YqXCj0hI6QF5EQ4YDPDafUflTjuA5g==&trenerid=").append(user_id);
         String url = stringBuilder.toString();
         JsonObjectRequest profile_data = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -76,77 +59,5 @@ public class ProfileProvider {
         RequestQueue q = Volley.newRequestQueue(c);
         q.add(profile_data);
 
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }

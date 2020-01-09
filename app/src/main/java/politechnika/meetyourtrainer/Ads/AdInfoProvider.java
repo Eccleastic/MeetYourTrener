@@ -97,4 +97,47 @@ public class AdInfoProvider {
         RequestQueue q = Volley.newRequestQueue(c);
         q.add(jor);
     }
+
+    public void getAdByFilters(final Context c,String latitude, String longitude, String distance, String maxdate, String maxprice, final ServerCallback callback) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        double distance_in_m = Double.valueOf(distance) * 1000;
+        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/getFilteredAdvertisements?code=dOaxvaq90k/tTJacHXW/has6GCQ2oDSN8bpaw4HVXtgGt1XV5x5X9w==");
+        stringBuilder.append("&lat=").append(latitude).append("&long=").append(longitude);
+        stringBuilder.append("&maxdist=").append(distance_in_m);
+        stringBuilder.append("&maxdate=").append(maxdate);
+        stringBuilder.append("&maxprice=").append(maxprice);
+
+        apiData = stringBuilder.toString();
+
+        String url = stringBuilder.toString();
+        JsonArrayRequest jor = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
+            try {
+                callback.onSuccess(response); // call call back function here
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> {
+            try {
+                if (error instanceof TimeoutError) {
+                    System.out.println("TimeoutError");
+                } else if (error instanceof NoConnectionError) {
+                    System.out.println("NoConnectionError");
+                } else if (error instanceof AuthFailureError) {
+                    System.out.println("AuthFailureError");
+                } else if (error instanceof ServerError) {
+                    System.out.println("ServerError");
+                } else if (error instanceof NetworkError) {
+                    System.out.println("NetworkError");
+                } else if (error instanceof ParseError) {
+                    System.out.println("ParseError");
+                }
+            } catch (Exception e) {
+            }
+        }
+        );
+        RequestQueue q = Volley.newRequestQueue(c);
+        q.add(jor);
+    }
 }

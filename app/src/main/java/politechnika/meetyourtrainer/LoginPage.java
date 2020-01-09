@@ -1,7 +1,9 @@
 package politechnika.meetyourtrainer;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +29,8 @@ public class LoginPage extends AppCompatActivity {
     Button button_app_info;
 
     TextView textView_log_in_problems;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,10 @@ public class LoginPage extends AppCompatActivity {
                     public void onSuccess(JSONObject result) throws JSONException {
                         System.out.println(result.get("user_id"));
                         if (result.getBoolean("loginSucessful")) {
+                            sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("user_id", result.getString("user_id"));
+                            editor.apply();
                             startActivity(intent);
                         } else {
                             Toast.makeText(getBaseContext(), "Wrong login credentials", Toast.LENGTH_LONG).show();
