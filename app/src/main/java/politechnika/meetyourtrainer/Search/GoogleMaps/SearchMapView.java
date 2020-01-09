@@ -123,15 +123,15 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
         googleMap.setOnInfoWindowClickListener(this);
 
         //LOAD MARKERS FROM MARKERS PROVIDER CLASS(custom markers)
-        MarkersProvider markersFromAPI = new MarkersProvider(0, 0, 0);
-        markersFromAPI.customMarkers();
+        //MarkersProvider markersFromAPI = new MarkersProvider(0, 0, 0);
+        //markersFromAPI.customMarkers();
 
         //LOAD MARKERS FROM API
         loadMarkersFromApi(googleMap);
-        List<MarkerOptions> markers = markersFromAPI.getMarkers();
-        for (MarkerOptions markerOption : markers) {
-            googleMap.addMarker(markerOption);
-        }
+        //List<MarkerOptions> markers = markersFromAPI.getMarkers();
+        //for (MarkerOptions markerOption : markers) {
+        //    googleMap.addMarker(markerOption);
+        //}
 
         CameraPosition Liberty = CameraPosition.builder().target(new LatLng(51.746956, 19.455958)).zoom(17).bearing(0).tilt(45).build();
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
