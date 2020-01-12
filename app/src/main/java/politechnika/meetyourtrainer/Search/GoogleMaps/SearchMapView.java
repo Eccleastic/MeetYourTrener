@@ -88,6 +88,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        System.out.println("SearchMapView onCreate");
         if (savedInstanceState != null) {
             lastLocation = savedInstanceState.getParcelable("location");
             cameraPosition = savedInstanceState.getParcelable("camera_position");

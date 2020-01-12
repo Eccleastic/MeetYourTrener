@@ -38,6 +38,7 @@ public class SearchListView extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        System.out.println("SearchListView onCreate");
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }

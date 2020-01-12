@@ -32,6 +32,7 @@ public class CalendarDayView extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        System.out.println("CalendarDayView onCreate");
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
@@ -46,25 +47,23 @@ public class CalendarDayView extends Fragment {
 
         MeetingProvider mp = new MeetingProvider(currentDate, currentDate);
         ArrayList<CardModel> models = new ArrayList<>();
+        CardModel m = new CardModel();
         mp.getDataFromApi(getActivity(), new ServerCallback() {
 
             @Override
             public void onSuccess(JSONArray response) throws JSONException {
                 if (response.length() == 0) {
-                    CardModel m = new CardModel();
                     m.setTitle("No meetings today");
                     m.setDesctiption("");
                     m.setImg(R.drawable.sademoji);
                     models.add(m);
                 } else {
                     for (int i = 0; i < response.length(); i++) {
-                        CardModel m = new CardModel();
                         JSONObject obj = response.getJSONObject(i);
                         m.setDesctiption(obj.getString("note") + ", " + obj.getString("meeting_address") + ", " + obj.getString("meeting_date"));
                         m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
                         m.setImg(R.drawable.face);
                         models.add(m);
-                        System.out.println(response.getJSONObject(i).toString());
                     }
                 }
                 myAdapter = new MyAdapter(getActivity(), models);
