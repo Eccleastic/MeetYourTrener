@@ -26,7 +26,7 @@ public class AdsCreateAd extends Fragment {
     RecyclerView recyclerView;
     MyAdapter myAdapter;
 
-    Button backButton, createAdButton, loadLocationButton;
+    Button createAdButton, loadLocationButton;
     EditText latitudeEditText, longitudeEditText, titleEditText, dateEditText, priceEditText, descriptionEditText, timeEditText, addressEditText;
 
     SharedPreferences sharedPreferences;
@@ -69,13 +69,7 @@ public class AdsCreateAd extends Fragment {
                 });
             }
         });
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
+
         loadLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +82,6 @@ public class AdsCreateAd extends Fragment {
     }
 
     private void initializeXmlComponents(View view){
-        backButton = view.findViewById(R.id.backButton);
         createAdButton = view.findViewById(R.id.createAdButton);
         loadLocationButton = view.findViewById(R.id.loadLocationButton);
         latitudeEditText = view.findViewById(R.id.latitudeEditText);
