@@ -29,14 +29,6 @@ public class SearchListView extends Fragment {
     RecyclerView recyclerView;
     MyAdapter myAdapter;
 
-    private TextView name;
-    private TextView description;
-    private TextView name2;
-    private TextView description2;
-
-    private TextView user1profile;
-    private TextView user2profile;
-
     SharedPreferences sharedPreferences;
 
 
@@ -46,6 +38,7 @@ public class SearchListView extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        System.out.println("SearchListView onCreate");
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
@@ -66,14 +59,14 @@ public class SearchListView extends Fragment {
         maxprice = sharedPreferences.getString("maxprice", "999.00");
         ArrayList<CardModel> models = new ArrayList<>();
 
-        ads.getAdByFilters(getActivity(),latitude,longitude,distance,maxdate,maxprice, new politechnika.meetyourtrainer.Ads.ServerCallback() {
+        ads.getAdByFilters(getActivity(), latitude, longitude, distance, maxdate, maxprice, new politechnika.meetyourtrainer.Ads.ServerCallback() {
             @Override
             public void onSuccess(JSONArray result) throws JSONException {
                 if (result.length() == 0) {
                     CardModel m = new CardModel();
                     m.setTitle("There is no ads with specified filters");
-                    m.setDescription("");
-                    m.setImgURL("");
+                    m.setDescription("Try again with other filters");
+                    m.setImgURL("https://thumbs.dreamstime.com/z/ludzie-biznesu-oceny-quesiton-wzruszenie-ramionami-279604.jpg");
                     models.add(m);
                 } else {
                     for(int i=0; i<result.length(); i++) {
@@ -91,7 +84,6 @@ public class SearchListView extends Fragment {
                         m.setPhone(obj.getString("trener_phone"));
                         m.setDate(obj.getString("date") + " " + obj.getString("time"));
                         models.add(m);
-                        System.out.println(result.get(i).toString());
                     }
 
                 }
@@ -101,58 +93,6 @@ public class SearchListView extends Fragment {
                 dialog.dismiss();
             }
         });
-
-        /*
-        name = view.findViewById(R.id.user1name);
-        description = view.findViewById(R.id.user1description);
-        name2 = view.findViewById(R.id.user2name);
-        description2 = view.findViewById(R.id.user2description);
-
-        user1profile = view.findViewById(R.id.user1profile);
-        user2profile = view.findViewById(R.id.user2profile);
-
-        name.setText("Adam Malysz");
-        description.setText("Specjalizuje sie w skakaniu. W góre, w bok, na nartach, bez nart, z jedną nartą, na wszystkim i ze wszystkim. 60$/h.");
-        name2.setText("Kasia Drąg");
-        description2.setText("Trenerka yogi z 15-letnim doświadczeniem. Zapraszam do siebie wszystkie panie od pon do pt w godzinach 8-14. 30$/h");
-
-        user1profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        user2profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                ProfileProvider profile = new ProfileProvider("testtrener");
-                profile.getDataFromApi(getActivity(), new ServerCallback() {
-                    @Override
-                    public void onSuccess(JSONObject response) throws JSONException {
-                        profile.setUserId(response.getString("user_ID"));
-                        profile.setName(response.getString("user_name"));
-                        profile.setSex(Integer.valueOf(response.getString("sex")));
-                        profile.setEmail(response.getString("contact_email"));
-                        profile.setPhoneNumber(response.getString("contact_phone"));
-                        profile.setName(response.getString("first_name"));
-                        profile.setLastname(response.getString("last_name"));
-                        profile.setRating(Double.valueOf(response.getString("user_rating")));
-                        profile.setDescription(response.getString("description"));
-                        System.out.println(response.getString("description"));
-                        intent.putExtra("description", profile.getDescription());
-                        intent.putExtra("title", profile.getName()+ " " + profile.getLastname());
-                        intent.putExtra("rate", profile.getRating());
-                        intent.putExtra("email", profile.getEmail());
-                        intent.putExtra("phone", profile.getPhoneNumber());
-                        startActivity(intent);
-                    }
-                });
-            }
-        });*/
-
         return view;
     }
 }

@@ -1,6 +1,8 @@
 package politechnika.meetyourtrainer.Calendar;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,12 +35,15 @@ public class CalendarPeriodTimeView extends Fragment {
 
     String id, description, address;
 
+    SharedPreferences sharedPreferences;
+
     public static CalendarPeriodTimeView newInstance() {
         return new CalendarPeriodTimeView();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        System.out.println("CalendarPeriodTimeView onCreate");
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
@@ -55,6 +60,9 @@ public class CalendarPeriodTimeView extends Fragment {
         String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
         dateStart.setText(currentDate);
         dateEnd.setText(currentDate);
+        sharedPreferences = getActivity().getSharedPreferences("UserCalendar", Context.MODE_PRIVATE);
+        dateStart.setText(sharedPreferences.getString("CalendarDateStart", "01.01.2020"));
+        dateEnd.setText(sharedPreferences.getString("CalendarDateEnd", "01.01.2021"));
 
         dateStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,22 +84,28 @@ public class CalendarPeriodTimeView extends Fragment {
             @Override
             public void onClick(View arg0) {
                 final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("CalendarDateStart", dateStart.getText().toString());
+                editor.putString("CalendarDateEnd", dateEnd.getText().toString());
+                editor.apply();
+                String start, end;
+                start = sharedPreferences.getString("CalendarDateStart", "01.01.2020");
+                end = sharedPreferences.getString("CalendarDateEnd", "01.01.2021");
 
-                MeetingProvider mp = new MeetingProvider(dateStart.getText().toString(), dateEnd.getText().toString());
+                MeetingProvider mp = new MeetingProvider(start, end);
                 ArrayList<CardModel> models = new ArrayList<>();
+                CardModel m = new CardModel();
                 mp.getDataFromApi(getActivity(), new ServerCallback() {
 
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
                         if (response.length() == 0) {
-                            CardModel m = new CardModel();
                             m.setTitle("No meetings planned");
                             m.setDesctiption("");
                             m.setImg(R.drawable.sademoji);
                             models.add(m);
                         } else {
                             for (int i = 0; i < response.length(); i++) {
-                                CardModel m = new CardModel();
                                 JSONObject obj = response.getJSONObject(i);
                                 m.setDesctiption(obj.getString("note") + ", " + obj.getString("meeting_address") + ", " + obj.getString("meeting_date"));
                                 m.setTitle("trener_ID: " + obj.getInt("trener_ID"));

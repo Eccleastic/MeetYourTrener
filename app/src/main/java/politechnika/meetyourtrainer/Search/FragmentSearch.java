@@ -41,7 +41,7 @@ public class FragmentSearch extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), FilterActivity.class);
-                startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
+                startActivity(intent);
             }
         });
 

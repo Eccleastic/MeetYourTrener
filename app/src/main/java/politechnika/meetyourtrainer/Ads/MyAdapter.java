@@ -60,23 +60,24 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
         String date = "\uD83D\uDCC5" + models.get(position).getDate();
         holder.date.setText(date);
 
-        //holder.image.setImageDrawable(models.get().getImgURL());
         setBitmapFromURL(models.get(position).getImgURL(), holder.image);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(c, AdInfoActivity.class);
-                intent.putExtra("description", models.get(position).getDescription());
-                intent.putExtra("title", models.get(position).getTitle());
-                intent.putExtra("rate", "4.70");
-                intent.putExtra("email", models.get(position).getEmail());
-                intent.putExtra("phone",  models.get(position).getPhone().trim());
-                intent.putExtra("price",  models.get(position).getPrice());
-                intent.putExtra("address",  models.get(position).getAddress());
-                intent.putExtra("name",  models.get(position).getName());
-                intent.putExtra("photoURL", models.get(position).getImgURL());
-                intent.putExtra("date", models.get(position).getDate());
-                c.startActivity(intent);
+                if(models.get(position).getAd_id() != null) {
+                    Intent intent = new Intent(c, AdInfoActivity.class);
+                    intent.putExtra("description", models.get(position).getDescription());
+                    intent.putExtra("title", models.get(position).getTitle());
+                    intent.putExtra("rate", "4.70");
+                    intent.putExtra("email", models.get(position).getEmail());
+                    intent.putExtra("phone", models.get(position).getPhone().trim());
+                    intent.putExtra("price", models.get(position).getPrice());
+                    intent.putExtra("address", models.get(position).getAddress());
+                    intent.putExtra("name", models.get(position).getName());
+                    intent.putExtra("photoURL", models.get(position).getImgURL());
+                    intent.putExtra("date", models.get(position).getDate());
+                    c.startActivity(intent);
+                }
             }
         });
     }

@@ -16,7 +16,6 @@ public class FilterActivity extends AppCompatActivity {
     Button saveButton, exitButton;
     EditText distance, text, maxdate, maxprice;
     SharedPreferences sharedPreferences;
-    String check="";
 
 
     @Override
@@ -51,17 +50,8 @@ public class FilterActivity extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check += sharedPreferences.getString("distance", "10");
-                check += " ";
-                check += sharedPreferences.getString("text", " ");
-                check += " ";
-                check += sharedPreferences.getString("maxdate", "01.01.2023");
-                check += " ";
-                check += sharedPreferences.getString("maxprice", "999.00");
-                check += " ";
-                System.out.println(check);
-                setResult(Activity.RESULT_OK, new Intent());
-                finish();
+                Intent intent = new Intent(getApplicationContext() , MainActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -32,20 +32,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private final LatLng budynek_CTI = new LatLng(51.746956, 19.455958);
-    private final LatLng budynek_centrum_sportu = new LatLng(51.746256, 19.451444);
-    private final LatLng budynek_sukcesja = new LatLng(51.749201, 19.448128);
-    private final LatLng budynek_WEEIA = new LatLng(51.752612, 19.453118);
     TextView textView;
     double latitude, longitude;
     boolean locationPermissionGranted;
     boolean wasCentered = false;
-    Marker marker;
     Thread threadLocalization;
     private GoogleMap mMap;
     private Location lastLocation;
     private CameraPosition cameraPosition;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private int markerNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,13 +91,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         updateLocation();
         getDeviceLocation();
 
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(budynek_CTI).title("Centrum Technologii Informatycznych"));
-        mMap.addMarker(new MarkerOptions().position(budynek_centrum_sportu).title("Centrum Sportu"));
-        mMap.addMarker(new MarkerOptions().position(budynek_sukcesja).title("Galeria Sukcesja"));
-        mMap.addMarker(new MarkerOptions().position(budynek_WEEIA).title("Wydzial EEIA"));
-
         threadLocalization = new Thread() {
             @Override
             public void run() {
@@ -147,20 +135,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             longitude = lastLocation.getLongitude();
 
                             if (!wasCentered) {
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(latitude, longitude), 17));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17));
                                 wasCentered = true;
                             }
                             textView.setText("Current location: " + latitude + " , " + longitude);
-
-                            //addNewMarker(latitude, longitude, BitmapDescriptorFactory.fromResource(R.drawable.emoji));
-
-                            markerNumber++;
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
-                            mMap.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(budynek_CTI, 17));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(budynek_CTI, 17));
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
                     }
@@ -169,14 +151,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
-    }
-
-    private void addNewMarker(double latitude, double longitude, BitmapDescriptor myIcon) {
-        if (marker != null && markerNumber > 0)
-            marker.remove();
-        BitmapDescriptor icon = myIcon;
-        LatLng other = new LatLng(latitude, longitude);
-        marker = mMap.addMarker(new MarkerOptions().position(other).title("You're here").icon(icon));
     }
 
     /**

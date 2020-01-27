@@ -101,6 +101,8 @@ public class AdInfoProvider {
     public void getAdByFilters(final Context c,String latitude, String longitude, String distance, String maxdate, String maxprice, final ServerCallback callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
+        if(distance.isEmpty())
+            distance = "10";
         double distance_in_m = Double.valueOf(distance) * 1000;
         stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/getFilteredAdvertisements?code=dOaxvaq90k/tTJacHXW/has6GCQ2oDSN8bpaw4HVXtgGt1XV5x5X9w==");
         stringBuilder.append("&lat=").append(latitude).append("&long=").append(longitude);
@@ -140,4 +142,52 @@ public class AdInfoProvider {
         RequestQueue q = Volley.newRequestQueue(c);
         q.add(jor);
     }
+
+    public void createNewAd(final Context c, String latitude, String longitude, String title, String trenerid, String date, String price, String description, String time, String address,  final ServerCallbackTwo callback) {
+        //&lat=51.7377&long=19.4577&title=Biegi%20prze%C5%82ajowe&trenerid=4&date=20.01.2020&time=10:00&price=90.00&address=Rondo%20Lotnikow%20Lwowskich%20Lodz&description=Jestem%20doswiadczonym%20trenerem%20biegow%20przelajowych%20na%20swoim%20koncie%20mam%20trzy%20medale%20olimpijskie%20i%20w%20ogole%20jestem%20gitem
+        //https://meetyourtrenerspringfunctions.azurewebsites.net/api/addNewAdvertisement?code=rGk5ecaSOZVTTp3tXFX66MqxB2eizwcPnZiri24qjORjNaLocGQVGg==
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/addNewAdvertisement?code=rGk5ecaSOZVTTp3tXFX66MqxB2eizwcPnZiri24qjORjNaLocGQVGg==");
+        stringBuilder.append("&lat=").append(latitude).append("&long=").append(longitude);
+        stringBuilder.append("&title=").append(title.replace(" ", "%20"));
+        stringBuilder.append("&trenerid=").append(trenerid);
+        stringBuilder.append("&date=").append(date);
+        stringBuilder.append("&time=").append(time);
+        stringBuilder.append("&price=").append(price);
+        stringBuilder.append("&address=").append(address.replace(" ","%20"));
+        stringBuilder.append("&description=").append(description.replace(" ", "%20"));
+
+        apiData = stringBuilder.toString();
+
+        String url = stringBuilder.toString();
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST, url, null, response -> {
+            try {
+                callback.onSuccess(response); // call call back function here
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> {
+            try {
+                if (error instanceof TimeoutError) {
+                    System.out.println("TimeoutError");
+                } else if (error instanceof NoConnectionError) {
+                    System.out.println("NoConnectionError");
+                } else if (error instanceof AuthFailureError) {
+                    System.out.println("AuthFailureError");
+                } else if (error instanceof ServerError) {
+                    System.out.println("ServerError");
+                } else if (error instanceof NetworkError) {
+                    System.out.println("NetworkError");
+                } else if (error instanceof ParseError) {
+                    System.out.println("ParseError");
+                }
+            } catch (Exception e) {
+            }
+        }
+        );
+        RequestQueue q = Volley.newRequestQueue(c);
+        q.add(jor);
+    }
+
 }

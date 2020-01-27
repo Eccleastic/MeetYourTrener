@@ -12,8 +12,6 @@ public class CalendarPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position == 0)
-            return CalendarDayView.newInstance();
-        if(position == 1)
             return CalendarThisWeekView.newInstance();
         else
             return CalendarPeriodTimeView.newInstance();
@@ -21,13 +19,12 @@ public class CalendarPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
     public String getPageTitle(int position) {
-        if(position == 0) return "Today";
-        else if (position == 1) return "This Week";
+        if(position == 0) return "This Week";
         else return "Period of time";
     }
 }
