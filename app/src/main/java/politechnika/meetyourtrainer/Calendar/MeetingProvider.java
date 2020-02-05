@@ -36,9 +36,7 @@ public class MeetingProvider {
     public void getDataFromApi(final Context c, final ServerCallback callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("http://meetyourtrenerspringfunctions.azurewebsites.net");
-        stringBuilder.append("/api/getMeetingsFromDateToDate?code=rSElQLtf");
-        stringBuilder.append("/xYOOhG/iPF0jVKXjze9aWPb4fwq8kYq3NMzmBtS3i20Yg==&startdate=");
+        stringBuilder.append("https://mytfunctions.azurewebsites.net/api/getMeetingsFromDateToDate?code=u9gHu3PV3mRA4xtUcVWy6dCfNaN/AcsLow8WqTUerguIoPnEaJszWQ==&startdate=");
         stringBuilder.append(dateStart).append("&enddate=").append(dateEnd);
 
         apiData = stringBuilder.toString();
