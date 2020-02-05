@@ -147,7 +147,7 @@ public class AdInfoProvider {
         //&lat=51.7377&long=19.4577&title=Biegi%20prze%C5%82ajowe&trenerid=4&date=20.01.2020&time=10:00&price=90.00&address=Rondo%20Lotnikow%20Lwowskich%20Lodz&description=Jestem%20doswiadczonym%20trenerem%20biegow%20przelajowych%20na%20swoim%20koncie%20mam%20trzy%20medale%20olimpijskie%20i%20w%20ogole%20jestem%20gitem
         //https://meetyourtrenerspringfunctions.azurewebsites.net/api/addNewAdvertisement?code=rGk5ecaSOZVTTp3tXFX66MqxB2eizwcPnZiri24qjORjNaLocGQVGg==
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/addNewAdvertisement?code=rGk5ecaSOZVTTp3tXFX66MqxB2eizwcPnZiri24qjORjNaLocGQVGg==");
+        stringBuilder.append("https://mytfunctions.azurewebsites.net/api/addNewAdvertisement?code=U83zm2b5UVmmumaoElP8JlDeBucqtgdEOmSxasySdRHz1goKQXaonQ==");
         stringBuilder.append("&lat=").append(latitude).append("&long=").append(longitude);
         stringBuilder.append("&title=").append(title.replace(" ", "%20"));
         stringBuilder.append("&trenerid=").append(trenerid);
