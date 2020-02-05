@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import politechnika.meetyourtrainer.Register.RegisterActivity;
 import politechnika.meetyourtrainer.api.APIHandler;
 import politechnika.meetyourtrainer.api.ServerCallback;
 
