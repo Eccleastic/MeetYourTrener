@@ -23,7 +23,7 @@ public class AdInfoProvider {
     public void getAdsByTrenerId(final Context c,String trener_id, final ServerCallback callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/getAdvertisementsByTrenerID?code=VGWDvsqQYI6H902rudUdG4Jo/MzU1g3zM0DUX6DIaa/E3vtsGP82sg==&trenerid=");
+        stringBuilder.append("https://mytfunctions.azurewebsites.net/api/getAdvertisementsByTrenerID?code=csOSdasazaWGma/QvxV95djvs/ha8J0eHwFaAIgbxGXK7O0iGEWLjA==&trenerid=");
         stringBuilder.append(trener_id);
 
         apiData = stringBuilder.toString();
@@ -62,7 +62,7 @@ public class AdInfoProvider {
     public void getAdByAdId(final Context c,String ad_id, final ServerCallbackTwo callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/getAdvertisementByID?code=5kQw/Ozkaa39pwcylYOgH4vSRuIIqySNah1dDJMU4hq2ROgeW0c4tQ==&advertisementid=");
+        stringBuilder.append("https://mytfunctions.azurewebsites.net/api/getAdvertisementByID?code=sAm2FXu0NKejDUJ1CeIRSiIQPusXbMJNMu11p2WyWciajng6evhbkw==&advertisementid=");
         stringBuilder.append(ad_id);
 
         apiData = stringBuilder.toString();
