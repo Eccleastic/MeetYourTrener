@@ -104,7 +104,7 @@ public class AdInfoProvider {
         if(distance.isEmpty())
             distance = "10";
         double distance_in_m = Double.valueOf(distance) * 1000;
-        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/getFilteredAdvertisements?code=dOaxvaq90k/tTJacHXW/has6GCQ2oDSN8bpaw4HVXtgGt1XV5x5X9w==");
+        stringBuilder.append("https://mytfunctions.azurewebsites.net/api/getFilteredAdvertisements?code=D/1t9HlHucQQHaU37B6LvTT2ArUrcwtaOXXJIRdc0TtWkAxlTBcnFA==");
         stringBuilder.append("&lat=").append(latitude).append("&long=").append(longitude);
         stringBuilder.append("&maxdist=").append(distance_in_m);
         stringBuilder.append("&maxdate=").append(maxdate);
