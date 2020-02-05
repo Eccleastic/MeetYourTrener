@@ -32,7 +32,7 @@ import java.nio.charset.Charset;
 
 public class APIHandler {
 
-    private static final String USER_CREDENTIAL_STRING = "https://meetyourtrenerspringfunctions.azurewebsites.net/api/checkLoginCredentials?code=1ANf2BApOKQAiivmwWc3D3UwHUzvuN9WxRYgfw/7UCgPr3Yk/CRCkQ==";
+    private static final String USER_CREDENTIAL_STRING = "https://mytfunctions.azurewebsites.net/api/checkLoginCredentials?code=kziVgpuTgUhaCOdPvAtwotJKXp7nbkpagLh/x7JSmzQLRS6cnhvIkw==";
 
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
