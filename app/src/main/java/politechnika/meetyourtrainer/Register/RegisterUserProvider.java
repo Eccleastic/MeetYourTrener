@@ -13,8 +13,6 @@ import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-
 public class RegisterUserProvider {
 
     public void registerUser(final Context c, String login, String password) {
@@ -24,8 +22,6 @@ public class RegisterUserProvider {
         stringBuilder.append(login);
         stringBuilder.append("&password=");
         stringBuilder.append(password);
-
-        String apiData = stringBuilder.toString();
 
         String url = stringBuilder.toString();
         JsonArrayRequest jor = new JsonArrayRequest(Request.Method.POST, url, null, response -> {
