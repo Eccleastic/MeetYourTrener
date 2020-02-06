@@ -85,16 +85,28 @@ public class UserProfileMyProfileView extends Fragment {
         profileProvider.getProfileById(getActivity(), user_id, new ServerCallback() {
             @Override
             public void onSuccess(JSONObject result) throws JSONException {
-                if (result.length() > 0){
-                    name.setText(result.getString("trener_name").trim());
-                    rating.setText(result.getString("user_rating"));
-                    phoneNumber = result.getString("contact_phone").trim();
-                    email = result.getString("contact_email").trim();
-                    description = result.getString("trener_description");
-                    setBitmapFromURL(result.getString("photo_link"), image);
-                    realName = result.getString("first_name") + " " + result.getString("last_name");
-                    age = result.getInt("age");
-                    sex = result.getInt("sex");
+                if (result.length() > 0) {
+                    try {
+                        name.setText(result.getString("trener_name").trim());
+                        phoneNumber = result.getString("contact_phone").trim();
+                        email = result.getString("contact_email").trim();
+                        setBitmapFromURL(result.getString("photo_link"), image);
+                        description = result.getString("trener_description");
+                        rating.setText(result.getString("user_rating"));
+                        realName = result.getString("first_name") + " " + result.getString("last_name");
+                        age = result.getInt("age");
+                        sex = result.getInt("sex");
+                    } catch (JSONException e) {
+                        description = "null";
+                        name.setText("null");
+                        phoneNumber = "123456789";
+                        email = "random@email.com";
+                        setBitmapFromURL("https://www.mixmedia.pl/temp/aktualnosci/znak%20zapytania.jpg", image);
+                        rating.setText("0.00");
+                        realName = "null null";
+                        age = 18;
+                        sex = 1;
+                    }
                 }
                 dialog.dismiss();
             }
@@ -104,7 +116,7 @@ public class UserProfileMyProfileView extends Fragment {
             @Override
             public void onClick(View v) {
                 System.out.println("CLICKED PHONE");
-                if(phoneNumber.length() >= 7) {
+                if (phoneNumber.length() >= 7) {
                     makePhoneCall();
                 } else {
                     Toast.makeText(getActivity(), "No phone number", Toast.LENGTH_SHORT);
@@ -122,21 +134,21 @@ public class UserProfileMyProfileView extends Fragment {
         viewPager.setAdapter(detailsAdapter);
     }
 
-    public void setBitmapFromURL(String url, ImageView img){
-        String drawableRes= url;
+    public void setBitmapFromURL(String url, ImageView img) {
+        String drawableRes = url;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         try {
             URL url1 = new URL(drawableRes);
-            img.setImageBitmap(BitmapFactory.decodeStream((InputStream)url1.getContent()));
+            img.setImageBitmap(BitmapFactory.decodeStream((InputStream) url1.getContent()));
         } catch (IOException e) {
             //Log.e(TAG, e.getMessage());
         }
     }
 
-    public void makePhoneCall(){
-        if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+    public void makePhoneCall() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
         } else {
             String dial = "tel:" + phoneNumber;
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
@@ -145,8 +157,8 @@ public class UserProfileMyProfileView extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == REQUEST_CALL){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == REQUEST_CALL) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 makePhoneCall();
             } else {
                 Toast.makeText(getActivity(), "Permission DENIED", Toast.LENGTH_SHORT);
