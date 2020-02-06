@@ -2,7 +2,9 @@ package politechnika.meetyourtrainer;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -34,9 +36,12 @@ public class AdInfoActivity extends AppCompatActivity {
     TextView price;
     TextView description;
     TextView address;
-    Button backButton;
+    Button backButton, takePartButton;
 
     String phoneNumber;
+    String userId;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +60,21 @@ public class AdInfoActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         address = findViewById(R.id.address);
         backButton = findViewById(R.id.backButton);
+        takePartButton = findViewById(R.id.takePartButton);
+        sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getString("user_id", "-1");
+        System.out.println(userId);
+        System.out.println(b.get("id"));
 
         if (getIntent().hasExtra("name")) {
             name.setText(b.getString("name"));
+            if (b.get("id").toString().trim().equals(userId)) {
+                takePartButton.setText("Edit Ad");
+            }
             rate.setText(b.getString("rate"));
             title.setText(b.getString("title"));
             price.setText(b.getString("price") + " zł");
-            description.setText(b.getString("description") +"\n Data: "+ b.getString("date") + " Kontakt: " + b.getString("email") + " " + b.getString("phone"));
+            description.setText(b.getString("description") + "\n Data: " + b.getString("date") + " Kontakt: " + b.getString("email") + " " + b.getString("phone"));
             address.setText(b.getString("address"));
             setBitmapFromURL(b.getString("photoURL"), userPhoto);
         }
@@ -80,7 +93,7 @@ public class AdInfoActivity extends AppCompatActivity {
                 System.out.println("CLICKED PHONE");
                 String number = b.getString("phone").trim();
                 System.out.println(number);
-                if(number.length() >= 7) {
+                if (number.length() >= 7) {
                     phoneNumber = number;
                     makePhoneCall();
                 } else {
@@ -98,21 +111,21 @@ public class AdInfoActivity extends AppCompatActivity {
 
     }
 
-    public void setBitmapFromURL(String url, ImageView img){
-        String drawableRes= url;
+    public void setBitmapFromURL(String url, ImageView img) {
+        String drawableRes = url;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         try {
             URL url1 = new URL(drawableRes);
-            img.setImageBitmap(BitmapFactory.decodeStream((InputStream)url1.getContent()));
+            img.setImageBitmap(BitmapFactory.decodeStream((InputStream) url1.getContent()));
         } catch (IOException e) {
             //Log.e(TAG, e.getMessage());
         }
     }
 
-    public void makePhoneCall(){
-        if(ContextCompat.checkSelfPermission(AdInfoActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(AdInfoActivity.this, new String[] {Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+    public void makePhoneCall() {
+        if (ContextCompat.checkSelfPermission(AdInfoActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AdInfoActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
         } else {
             String dial = "tel:" + phoneNumber;
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
@@ -121,8 +134,8 @@ public class AdInfoActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == REQUEST_CALL){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == REQUEST_CALL) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 makePhoneCall();
             } else {
                 Toast.makeText(AdInfoActivity.this, "Permission DENIED", Toast.LENGTH_SHORT);

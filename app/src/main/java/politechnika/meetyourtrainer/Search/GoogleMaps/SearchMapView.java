@@ -276,6 +276,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
                 intent.putExtra("description", result.getString("ad_description"));
                 intent.putExtra("title", result.getString("title"));
                 intent.putExtra("rate", "4.75");
+                intent.putExtra("id", result.getString("trener_id"));
                 try {
                     intent.putExtra("email", result.getString("trener_email"));
                     intent.putExtra("phone", result.getString("trener_phone"));

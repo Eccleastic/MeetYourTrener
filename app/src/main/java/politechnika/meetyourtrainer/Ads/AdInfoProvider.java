@@ -19,7 +19,7 @@ import org.json.JSONException;
 public class AdInfoProvider {
     String apiData;
 
-    public void getAdsByTrenerId(final Context c,String trener_id, final ServerCallback callback) {
+    public void getAdsByTrenerId(final Context c, String trener_id, final ServerCallback callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("https://mytfunctions.azurewebsites.net/api/getAdvertisementsByTrenerID?code=csOSdasazaWGma/QvxV95djvs/ha8J0eHwFaAIgbxGXK7O0iGEWLjA==&trenerid=");
@@ -58,7 +58,7 @@ public class AdInfoProvider {
         q.add(jor);
     }
 
-    public void getAdByAdId(final Context c,String ad_id, final ServerCallbackTwo callback) {
+    public void getAdByAdId(final Context c, String ad_id, final ServerCallbackTwo callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("https://mytfunctions.azurewebsites.net/api/getAdvertisementByID?code=sAm2FXu0NKejDUJ1CeIRSiIQPusXbMJNMu11p2WyWciajng6evhbkw==&advertisementid=");
@@ -97,10 +97,10 @@ public class AdInfoProvider {
         q.add(jor);
     }
 
-    public void getAdByFilters(final Context c,String latitude, String longitude, String distance, String maxdate, String maxprice, final ServerCallback callback) {
+    public void getAdByFilters(final Context c, String latitude, String longitude, String distance, String maxdate, String maxprice, final ServerCallback callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        if(distance.isEmpty())
+        if (distance.isEmpty())
             distance = "10";
         double distance_in_m = Double.valueOf(distance) * 1000;
         stringBuilder.append("https://mytfunctions.azurewebsites.net/api/getFilteredAdvertisements?code=D/1t9HlHucQQHaU37B6LvTT2ArUrcwtaOXXJIRdc0TtWkAxlTBcnFA==");
@@ -142,7 +142,7 @@ public class AdInfoProvider {
         q.add(jor);
     }
 
-    public void createNewAd(final Context c, String latitude, String longitude, String title, String trenerid, String date, String price, String description, String time, String address,  final ServerCallbackTwo callback) {
+    public void createNewAd(final Context c, String latitude, String longitude, String title, String trenerid, String date, String price, String description, String time, String address, final ServerCallbackTwo callback) {
         //&lat=51.7377&long=19.4577&title=Biegi%20prze%C5%82ajowe&trenerid=4&date=20.01.2020&time=10:00&price=90.00&address=Rondo%20Lotnikow%20Lwowskich%20Lodz&description=Jestem%20doswiadczonym%20trenerem%20biegow%20przelajowych%20na%20swoim%20koncie%20mam%20trzy%20medale%20olimpijskie%20i%20w%20ogole%20jestem%20gitem
         //https://meetyourtrenerspringfunctions.azurewebsites.net/api/addNewAdvertisement?code=rGk5ecaSOZVTTp3tXFX66MqxB2eizwcPnZiri24qjORjNaLocGQVGg==
         StringBuilder stringBuilder = new StringBuilder();
@@ -153,7 +153,7 @@ public class AdInfoProvider {
         stringBuilder.append("&date=").append(date);
         stringBuilder.append("&time=").append(time);
         stringBuilder.append("&price=").append(price);
-        stringBuilder.append("&address=").append(address.replace(" ","%20"));
+        stringBuilder.append("&address=").append(address.replace(" ", "%20"));
         stringBuilder.append("&description=").append(description.replace(" ", "%20"));
 
         apiData = stringBuilder.toString();
@@ -188,5 +188,65 @@ public class AdInfoProvider {
         RequestQueue q = Volley.newRequestQueue(c);
         q.add(jor);
     }
+
+    /*
+    Parameters:
+        advertisementid
+        lat
+        long
+        title
+        trenerid
+        date
+        time
+        price
+        address
+        description
+
+     */
+
+    public void editAd(final Context c, String advertisementid, String lat, String longi, String title, String trenerid, String date, String time, String price, String address, String description, final ServerCallbackTwo callback) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("https://mytfunctions.azurewebsites.net/api/editAdvertisement?code=jz6bIPfM/qBO9lMzqYEzBQqmLUe5wt16ThIjibPHmMuDy9yIkv6isA==");
+        stringBuilder.append("&advertisementid=").append(advertisementid).append("&lat=").append(lat);
+        stringBuilder.append("&long=").append(longi);
+        stringBuilder.append("&title=").append(title.replace(" ", "%20"));
+        stringBuilder.append("&trenerid=").append(trenerid);
+        stringBuilder.append("&date=").append(date);
+        stringBuilder.append("&time=").append(time);
+        stringBuilder.append("&price=").append(price);
+        stringBuilder.append("&address=").append(address.replace(" ", "%20"));
+        stringBuilder.append("&description=").append(description.replace(" ", "%20"));
+
+        String url = stringBuilder.toString();
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST, url, null, response -> {
+            try {
+                callback.onSuccess(response); // call callback function here
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> {
+            try {
+                if (error instanceof TimeoutError) {
+                    System.out.println("TimeoutError");
+                } else if (error instanceof NoConnectionError) {
+                    System.out.println("NoConnectionError");
+                } else if (error instanceof AuthFailureError) {
+                    System.out.println("AuthFailureError");
+                } else if (error instanceof ServerError) {
+                    System.out.println("ServerError");
+                } else if (error instanceof NetworkError) {
+                    System.out.println("NetworkError");
+                } else if (error instanceof ParseError) {
+                    System.out.println("ParseError");
+                }
+            } catch (Exception e) {
+            }
+        }
+        );
+        RequestQueue q = Volley.newRequestQueue(c);
+        q.add(jor);
+    }
+
 
 }
