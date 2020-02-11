@@ -97,7 +97,7 @@ public class AdInfoProvider {
         q.add(jor);
     }
 
-    public void getAdByFilters(final Context c, String latitude, String longitude, String distance, String maxdate, String maxprice, final ServerCallback callback) {
+    public void getAdByFilters(final Context c, String latitude, String longitude, String distance, String maxdate, String maxprice, /*String text,*/ final ServerCallback callback) {
 
         StringBuilder stringBuilder = new StringBuilder();
         if (distance.isEmpty())
@@ -108,6 +108,7 @@ public class AdInfoProvider {
         stringBuilder.append("&maxdist=").append(distance_in_m);
         stringBuilder.append("&maxdate=").append(maxdate);
         stringBuilder.append("&maxprice=").append(maxprice);
+        //stringBuilder.append("&text=").append(text);
 
         apiData = stringBuilder.toString();
 
