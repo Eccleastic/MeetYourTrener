@@ -143,13 +143,13 @@ public class AdInfoProvider {
     }
 
     public void createNewAd(final Context c, String latitude, String longitude, String title, String trenerid, String date, String price, String description, String time, String address, final ServerCallbackTwo callback) {
-        //&lat=51.7377&long=19.4577&title=Biegi%20prze%C5%82ajowe&trenerid=4&date=20.01.2020&time=10:00&price=90.00&address=Rondo%20Lotnikow%20Lwowskich%20Lodz&description=Jestem%20doswiadczonym%20trenerem%20biegow%20przelajowych%20na%20swoim%20koncie%20mam%20trzy%20medale%20olimpijskie%20i%20w%20ogole%20jestem%20gitem
-        //https://meetyourtrenerspringfunctions.azurewebsites.net/api/addNewAdvertisement?code=rGk5ecaSOZVTTp3tXFX66MqxB2eizwcPnZiri24qjORjNaLocGQVGg==
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("https://mytfunctions.azurewebsites.net/api/addNewAdvertisement?code=U83zm2b5UVmmumaoElP8JlDeBucqtgdEOmSxasySdRHz1goKQXaonQ==");
         stringBuilder.append("&lat=").append(latitude).append("&long=").append(longitude);
         stringBuilder.append("&title=").append(title.replace(" ", "%20"));
         stringBuilder.append("&trenerid=").append(trenerid);
+        stringBuilder.append("&userid=").append(trenerid);
         stringBuilder.append("&date=").append(date);
         stringBuilder.append("&time=").append(time);
         stringBuilder.append("&price=").append(price);
@@ -189,25 +189,11 @@ public class AdInfoProvider {
         q.add(jor);
     }
 
-    /*
-    Parameters:
-        advertisementid
-        lat
-        long
-        title
-        trenerid
-        date
-        time
-        price
-        address
-        description
-
-     */
-
     public void editAd(final Context c, String advertisementid, String lat, String longi, String title, String trenerid, String date, String time, String price, String address, String description, final ServerCallbackTwo callback) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("https://mytfunctions.azurewebsites.net/api/editAdvertisement?code=jz6bIPfM/qBO9lMzqYEzBQqmLUe5wt16ThIjibPHmMuDy9yIkv6isA==");
-        stringBuilder.append("&advertisementid=").append(advertisementid).append("&lat=").append(lat);
+        stringBuilder.append("&advertisementid=").append(advertisementid);
+        stringBuilder.append("&lat=").append(lat);
         stringBuilder.append("&long=").append(longi);
         stringBuilder.append("&title=").append(title.replace(" ", "%20"));
         stringBuilder.append("&trenerid=").append(trenerid);

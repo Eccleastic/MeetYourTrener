@@ -38,9 +38,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 
-import politechnika.meetyourtrainer.AdInfoActivity;
+import politechnika.meetyourtrainer.Ads.AdInfoActivity;
 import politechnika.meetyourtrainer.Ads.AdInfoProvider;
 import politechnika.meetyourtrainer.Ads.ServerCallbackTwo;
 import politechnika.meetyourtrainer.R;
@@ -223,7 +222,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
                                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17));
                                 wasCentered = true;
                             }
-                            Toast.makeText(getActivity(), "Current location: " + latitude + " , " + longitude, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "Current location: " + latitude + " , " + longitude, Toast.LENGTH_SHORT).show();
 
                         } else {
                             Toast.makeText(getActivity(), "Current location is null. Using defaults.", Toast.LENGTH_SHORT).show();
@@ -277,6 +276,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
                 intent.putExtra("title", result.getString("title"));
                 intent.putExtra("rate", "4.75");
                 intent.putExtra("id", result.getString("trener_id"));
+                intent.putExtra("ad_id", ad_id);
                 try {
                     intent.putExtra("email", result.getString("trener_email"));
                     intent.putExtra("phone", result.getString("trener_phone"));
@@ -290,6 +290,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
                 intent.putExtra("address", result.getString("address"));
                 intent.putExtra("name", result.getString("trener_name"));
                 intent.putExtra("date", result.getString("date"));
+                intent.putExtra("time", result.getString("time"));
                 dialog.dismiss();
                 startActivity(intent);
             }

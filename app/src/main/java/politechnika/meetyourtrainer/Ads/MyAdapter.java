@@ -16,7 +16,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-import politechnika.meetyourtrainer.AdInfoActivity;
 import politechnika.meetyourtrainer.R;
 
 public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter<MyHolder> {

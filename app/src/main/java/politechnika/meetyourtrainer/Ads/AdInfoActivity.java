@@ -1,7 +1,8 @@
-package politechnika.meetyourtrainer;
+package politechnika.meetyourtrainer.Ads;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,9 +22,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+
+import politechnika.meetyourtrainer.LoginPage;
+import politechnika.meetyourtrainer.R;
 
 public class AdInfoActivity extends AppCompatActivity {
 
@@ -63,14 +71,13 @@ public class AdInfoActivity extends AppCompatActivity {
         takePartButton = findViewById(R.id.takePartButton);
         sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("user_id", "-1");
-        System.out.println(userId);
-        System.out.println(b.get("id"));
+        userId = sharedPreferences.getString("user_id", "-1");
 
         if (getIntent().hasExtra("name")) {
-            name.setText(b.getString("name"));
             if (b.get("id").toString().trim().equals(userId)) {
                 takePartButton.setText("Edit Ad");
             }
+            name.setText(b.getString("name"));
             rate.setText(b.getString("rate"));
             title.setText(b.getString("title"));
             price.setText(b.getString("price") + " zł");
@@ -84,6 +91,44 @@ public class AdInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 setResult(Activity.RESULT_OK, new Intent());
                 finish();
+            }
+        });
+
+        takePartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (takePartButton.getText().toString().equals("Edit Ad")) {
+                    // go to edit ad activity
+                    if (getIntent().hasExtra("id")) {
+                        final ProgressDialog dialog = ProgressDialog.show(AdInfoActivity.this, null, "Please wait");
+                        AdInfoProvider adInfoProvider = new AdInfoProvider();
+                        adInfoProvider.getAdByAdId(getApplicationContext(), b.getString("id"), new ServerCallbackTwo() {
+                            @Override
+                            public void onSuccess(JSONObject result1) throws JSONException {
+                                AdsCreateAd editViewCreateAd = new AdsCreateAd();
+                                Bundle bundlesForEditView = new Bundle();
+                                bundlesForEditView.putString("latitude", result1.getString("latitude"));
+                                bundlesForEditView.putString("longitude", result1.getString("longitude"));
+                                bundlesForEditView.putString("title", result1.getString("title"));
+                                bundlesForEditView.putString("price", result1.getString("price"));
+                                bundlesForEditView.putString("date", result1.getString("date"));
+                                bundlesForEditView.putString("time", result1.getString("time"));
+                                bundlesForEditView.putString("address", result1.getString("address"));
+                                bundlesForEditView.putString("ad_description", result1.getString("ad_description"));
+                                bundlesForEditView.putString("advertisement_id", result1.getString("advertisement_id"));
+                                bundlesForEditView.putString("trener_id", result1.getString("trener_id"));
+
+                                Intent intent = new Intent(getApplicationContext(), EditAdActivity.class);
+                                intent.putExtras(bundlesForEditView);
+                                startActivity(intent);
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                } else {
+                    // create meeting
+                    System.out.println("take part");
+                }
             }
         });
 
@@ -105,7 +150,7 @@ public class AdInfoActivity extends AppCompatActivity {
         userPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //go to profile
             }
         });
 

@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import politechnika.meetyourtrainer.AdInfoActivity;
 import politechnika.meetyourtrainer.Profile.ProfileProvider;
 import politechnika.meetyourtrainer.Profile.ServerCallback;
 import politechnika.meetyourtrainer.R;
