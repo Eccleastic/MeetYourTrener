@@ -96,29 +96,36 @@ public class CalendarPeriodTimeView extends Fragment {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
                 String userid = sharedPreferences.getString("user_id", "1");
                 ArrayList<CardModel> models = new ArrayList<>();
-                CardModel m = new CardModel();
-                mp.getMeetingsFromDateToDate(getActivity(),start, end, userid, new ServerCallback() {
+                mp.getMeetingsFromDateToDate(getActivity(), start, end, userid, new ServerCallback() {
 
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
                         System.out.println(response);
                         if (response.length() == 0) {
+                            CardModel m = new CardModel();
                             m.setTitle("No meetings planned");
                             m.setDesctiption("");
                             m.setImg(R.drawable.sademoji);
                             models.add(m);
                         } else {
                             for (int i = 0; i < response.length(); i++) {
+                                CardModel m = new CardModel();
                                 JSONObject obj = response.getJSONObject(i);
-                                m.setDesctiption(/* obj.getString("note") + ", " + */obj.getString("meeting_address") + ", " + obj.getString("meeting_date"));
-                                m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
-                                m.setImg(R.drawable.face);
+                                m.setDesctiption(
+                                        obj.getString("meeting_address").replaceAll("\\s+$", "") + ", " +
+                                                obj.getString("meeting_date").replaceAll("\\s+$", ""));
+                                //m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
+                                m.setTitle(obj.getString("note"));
+                                m.setImg(R.drawable.meeting);
                                 id = Integer.toString(obj.getInt("meeting_ID"));
-                                address = obj.getString("meeting_address");
-                                description = response.toString();
+                                address = obj.getString("meeting_address").replaceAll("\\s+$", "");
+                                description = response.toString().replaceAll("\\s+$", "");
                                 models.add(m);
-                                System.out.println(response.getJSONObject(i).toString());
                             }
+                        }
+                        System.out.println("models");
+                        for (CardModel s : models) {
+                            System.out.println(s.getDesctiption());
                         }
                         myAdapter = new MyAdapter(getActivity(), models);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));

@@ -130,7 +130,7 @@ public class AdInfoActivity extends AppCompatActivity {
                                         b.getString("ad_id"),
                                         userId,
                                         result1.getString("trener_id"),
-                                        result1.getString("date") + " " + result1.getString("time"),
+                                        result1.getString("date"),
                                         result1.getString("address"),
                                         result1.getString("latitude"),
                                         result1.getString("longitude"),

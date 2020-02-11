@@ -72,9 +72,11 @@ public class CalendarThisWeekView extends Fragment {
                 } else {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject obj = response.getJSONObject(i);
-                        m.setDesctiption(obj.getString("note") + ", " + obj.getString("meeting_address") + ", " + obj.getString("meeting_date"));
-                        m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
-                        m.setImg(R.drawable.face);
+                        m.setDesctiption(
+                                obj.getString("meeting_address").replaceAll("\\s+$", "") + ", "
+                                        + obj.getString("meeting_date").replaceAll("\\s+$", ""));
+                        m.setTitle(obj.getString("note"));
+                        m.setImg(R.drawable.meeting);
                         models.add(m);
                         System.out.println(response.getJSONObject(i).toString());
                     }
