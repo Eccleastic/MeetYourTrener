@@ -30,7 +30,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import politechnika.meetyourtrainer.Calendar.MeetingProvider;
 import politechnika.meetyourtrainer.LoginPage;
+import politechnika.meetyourtrainer.MainActivity;
 import politechnika.meetyourtrainer.R;
 
 public class AdInfoActivity extends AppCompatActivity {
@@ -97,38 +99,61 @@ public class AdInfoActivity extends AppCompatActivity {
         takePartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (takePartButton.getText().toString().equals("Edit Ad")) {
-                    // go to edit ad activity
-                    if (getIntent().hasExtra("id")) {
-                        final ProgressDialog dialog = ProgressDialog.show(AdInfoActivity.this, null, "Please wait");
-                        AdInfoProvider adInfoProvider = new AdInfoProvider();
-                        adInfoProvider.getAdByAdId(getApplicationContext(), b.getString("id"), new ServerCallbackTwo() {
-                            @Override
-                            public void onSuccess(JSONObject result1) throws JSONException {
-                                AdsCreateAd editViewCreateAd = new AdsCreateAd();
-                                Bundle bundlesForEditView = new Bundle();
-                                bundlesForEditView.putString("latitude", result1.getString("latitude"));
-                                bundlesForEditView.putString("longitude", result1.getString("longitude"));
-                                bundlesForEditView.putString("title", result1.getString("title"));
-                                bundlesForEditView.putString("price", result1.getString("price"));
-                                bundlesForEditView.putString("date", result1.getString("date"));
-                                bundlesForEditView.putString("time", result1.getString("time"));
-                                bundlesForEditView.putString("address", result1.getString("address"));
-                                bundlesForEditView.putString("ad_description", result1.getString("ad_description"));
-                                bundlesForEditView.putString("advertisement_id", result1.getString("advertisement_id"));
-                                bundlesForEditView.putString("trener_id", result1.getString("trener_id"));
+                // go to edit ad activity
+                if (getIntent().hasExtra("ad_id")) {
+                    final ProgressDialog dialog = ProgressDialog.show(AdInfoActivity.this, null, "Please wait");
+                    AdInfoProvider adInfoProvider = new AdInfoProvider();
+                    adInfoProvider.getAdByAdId(getApplicationContext(), b.getString("ad_id"), new ServerCallbackTwo() {
+                        @Override
+                        public void onSuccess(JSONObject result1) throws JSONException {
+                            Bundle bundlesForEditView = new Bundle();
+                            bundlesForEditView.putString("latitude", result1.getString("latitude"));
+                            bundlesForEditView.putString("longitude", result1.getString("longitude"));
+                            bundlesForEditView.putString("title", result1.getString("title"));
+                            bundlesForEditView.putString("price", result1.getString("price"));
+                            bundlesForEditView.putString("date", result1.getString("date"));
+                            bundlesForEditView.putString("time", result1.getString("time"));
+                            bundlesForEditView.putString("address", result1.getString("address"));
+                            bundlesForEditView.putString("ad_description", result1.getString("ad_description"));
+                            bundlesForEditView.putString("advertisement_id", result1.getString("advertisement_id"));
+                            bundlesForEditView.putString("trener_id", result1.getString("trener_id"));
 
+                            if (takePartButton.getText().equals("Edit Ad")) {
                                 Intent intent = new Intent(getApplicationContext(), EditAdActivity.class);
                                 intent.putExtras(bundlesForEditView);
                                 startActivity(intent);
                                 dialog.dismiss();
+                            } else {
+                                MeetingProvider meetingProvider = new MeetingProvider();
+                                meetingProvider.createMeeting(
+                                        getApplicationContext(),
+                                        b.getString("ad_id"),
+                                        userId,
+                                        result1.getString("trener_id"),
+                                        result1.getString("date") + " " + result1.getString("time"),
+                                        result1.getString("address"),
+                                        result1.getString("latitude"),
+                                        result1.getString("longitude"),
+                                        result1.getString("price"),
+                                        result1.getString("title"),
+                                        new ServerCallbackTwo() {
+                                            @Override
+                                            public void onSuccess(JSONObject result) throws JSONException {
+                                                System.out.println(result);
+                                                if (result.getString("wasAdded").equals("true")) {
+                                                    System.out.println("Added meeting");
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    startActivity(intent);
+                                                    dialog.dismiss();
+                                                }
+                                            }
+                                        }
+                                );
                             }
-                        });
-                    }
-                } else {
-                    // create meeting
-                    System.out.println("take part");
+                        }
+                    });
                 }
+
             }
         });
 

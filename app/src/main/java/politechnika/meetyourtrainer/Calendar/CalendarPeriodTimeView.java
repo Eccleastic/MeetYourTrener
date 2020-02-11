@@ -92,13 +92,16 @@ public class CalendarPeriodTimeView extends Fragment {
                 start = sharedPreferences.getString("CalendarDateStart", "01.01.2020");
                 end = sharedPreferences.getString("CalendarDateEnd", "01.01.2021");
 
-                MeetingProvider mp = new MeetingProvider(start, end);
+                MeetingProvider mp = new MeetingProvider();
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                String userid = sharedPreferences.getString("user_id", "1");
                 ArrayList<CardModel> models = new ArrayList<>();
                 CardModel m = new CardModel();
-                mp.getDataFromApi(getActivity(), new ServerCallback() {
+                mp.getMeetingsFromDateToDate(getActivity(),start, end, userid, new ServerCallback() {
 
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
+                        System.out.println(response);
                         if (response.length() == 0) {
                             m.setTitle("No meetings planned");
                             m.setDesctiption("");
@@ -107,7 +110,7 @@ public class CalendarPeriodTimeView extends Fragment {
                         } else {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
-                                m.setDesctiption(obj.getString("note") + ", " + obj.getString("meeting_address") + ", " + obj.getString("meeting_date"));
+                                m.setDesctiption(/* obj.getString("note") + ", " + */obj.getString("meeting_address") + ", " + obj.getString("meeting_date"));
                                 m.setTitle("trener_ID: " + obj.getInt("trener_ID"));
                                 m.setImg(R.drawable.face);
                                 id = Integer.toString(obj.getInt("meeting_ID"));

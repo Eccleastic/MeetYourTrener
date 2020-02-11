@@ -204,6 +204,7 @@ public class AdInfoProvider {
         stringBuilder.append("&description=").append(description.replace(" ", "%20"));
 
         String url = stringBuilder.toString();
+        System.out.println(url);
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.POST, url, null, response -> {
             try {
                 callback.onSuccess(response); // call callback function here

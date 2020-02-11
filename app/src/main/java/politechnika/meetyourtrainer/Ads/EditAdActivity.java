@@ -51,18 +51,19 @@ public class EditAdActivity extends AppCompatActivity {
                 adInfoProvider.editAd(
                         getApplicationContext(),
                         b.getString("advertisement_id"),
-                        b.getString("latitude"),
-                        b.getString("longitude"),
-                        b.getString("title"),
+                        latitudeEditText.getText().toString(),
+                        longitudeEditText.getText().toString(),
+                        titleEditText.getText().toString(),
                         b.getString("trener_id"),
-                        b.getString("date"),
-                        b.getString("time"),
-                        b.getString("price"),
-                        b.getString("address"),
-                        b.getString("ad_description"),
+                        dateEditText.getText().toString(),
+                        timeEditText.getText().toString(),
+                        priceEditText.getText().toString(),
+                        addressEditText.getText().toString(),
+                        descriptionEditText.getText().toString(),
                         new ServerCallbackTwo() {
                             @Override
                             public void onSuccess(JSONObject result) throws JSONException {
+                                System.out.println(result);
                                 if (result.getString("wasEdited").equals("true")) {
                                     System.out.println(result.getString("wasEdited"));
                                     startActivity(intent);
