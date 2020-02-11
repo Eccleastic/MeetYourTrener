@@ -38,9 +38,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 
-import politechnika.meetyourtrainer.AdInfoActivity;
+import politechnika.meetyourtrainer.Ads.AdInfoActivity;
 import politechnika.meetyourtrainer.Ads.AdInfoProvider;
 import politechnika.meetyourtrainer.Ads.ServerCallbackTwo;
 import politechnika.meetyourtrainer.R;
@@ -223,7 +222,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
                                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17));
                                 wasCentered = true;
                             }
-                            Toast.makeText(getActivity(), "Current location: " + latitude + " , " + longitude, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "Current location: " + latitude + " , " + longitude, Toast.LENGTH_SHORT).show();
 
                         } else {
                             Toast.makeText(getActivity(), "Current location is null. Using defaults.", Toast.LENGTH_SHORT).show();
@@ -264,7 +263,7 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
     public void onInfoWindowClick(Marker marker) {
         boolean isHere = mHashMap.containsKey(marker);
         String ad_id = String.valueOf(mHashMap.get(marker));
-        if(!isHere) {
+        if (!isHere) {
             return;
         }
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
@@ -276,20 +275,29 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
                 intent.putExtra("description", result.getString("ad_description"));
                 intent.putExtra("title", result.getString("title"));
                 intent.putExtra("rate", "4.75");
-                intent.putExtra("email", result.getString("trener_email"));
-                intent.putExtra("phone",  result.getString("trener_phone"));
-                intent.putExtra("price",  String.valueOf(result.getDouble("price")));
-                intent.putExtra("address",  result.getString("address"));
-                intent.putExtra("name",  result.getString("trener_name"));
-                intent.putExtra("photoURL", result.getString("photo_link"));
+                intent.putExtra("id", result.getString("trener_id"));
+                intent.putExtra("ad_id", ad_id);
+                try {
+                    intent.putExtra("email", result.getString("trener_email"));
+                    intent.putExtra("phone", result.getString("trener_phone"));
+                    intent.putExtra("photoURL", result.getString("photo_link"));
+                } catch (JSONException e) {
+                    intent.putExtra("email", "random@email.com");
+                    intent.putExtra("phone", "123456789");
+                    intent.putExtra("photoURL", "https://www.mixmedia.pl/temp/aktualnosci/znak%20zapytania.jpg");
+                }
+                intent.putExtra("price", String.valueOf(result.getDouble("price")));
+                intent.putExtra("address", result.getString("address"));
+                intent.putExtra("name", result.getString("trener_name"));
                 intent.putExtra("date", result.getString("date"));
+                intent.putExtra("time", result.getString("time"));
                 dialog.dismiss();
                 startActivity(intent);
             }
         });
     }
 
-    public void loadMarkersFromApi(GoogleMap googleMap){
+    public void loadMarkersFromApi(GoogleMap googleMap) {
         AdInfoProvider ads = new AdInfoProvider();
         sharedPreferences = this.getActivity().getSharedPreferences("FilterData", Context.MODE_PRIVATE);
         String latitude, longitude, distance, maxdate, maxprice;
@@ -299,17 +307,17 @@ public class SearchMapView extends Fragment implements OnMapReadyCallback, Googl
         maxdate = sharedPreferences.getString("maxdate", "01.01.2023");
         maxprice = sharedPreferences.getString("maxprice", "999");
 
-        ads.getAdByFilters(getActivity(),latitude, longitude, distance, maxdate, maxprice, new politechnika.meetyourtrainer.Ads.ServerCallback() {
+        ads.getAdByFilters(getActivity(), latitude, longitude, distance, maxdate, maxprice, new politechnika.meetyourtrainer.Ads.ServerCallback() {
             @Override
             public void onSuccess(JSONArray result) throws JSONException {
                 if (result.length() > 0) {
-                    for(int i=0; i<result.length(); i++) {
+                    for (int i = 0; i < result.length(); i++) {
                         JSONObject obj = result.getJSONObject(i);
                         LatLng coordinates = new LatLng(obj.getDouble("latitude"), obj.getDouble("longitude"));
                         String title = obj.getString("title") + " " + obj.getString("price") + "zł";
                         String description;
-                        if(obj.getString("ad_description").length() > 20){
-                            description = obj.getString("ad_description").substring(0,19) + "... " +  obj.getString("date");
+                        if (obj.getString("ad_description").length() > 20) {
+                            description = obj.getString("ad_description").substring(0, 19) + "... " + obj.getString("date");
                         } else {
                             description = obj.getString("ad_description") + " " + obj.getString("date");
                         }

@@ -22,7 +22,7 @@ public class ProfileProvider {
 
     public void getProfileById(final Context c, String user_id,  final ServerCallback callback) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("https://meetyourtrenerspringfunctions.azurewebsites.net/api/getUserTrenerDataByID?code=Eb48V9JOEenJBLbNRAFJj6s3YqXCj0hI6QF5EQ4YDPDafUflTjuA5g==&trenerid=").append(user_id);
+        stringBuilder.append("https://mytfunctions.azurewebsites.net/api/getUserTrenerDataByID?code=0nziF0HYsJUhLCtdX/T7VVZiBWm9lgxTZlyoKjEddIFBNWyc4IE48Q==&trenerid=").append(user_id);
         String url = stringBuilder.toString();
         JsonObjectRequest profile_data = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

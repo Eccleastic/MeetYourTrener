@@ -46,6 +46,10 @@ public class AdsCreateAd extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_create_ad, container, false);
         initializeXmlComponents(view);
+        //if(){
+
+        //}
+        //fillFieldsForEditView();
         sharedPreferences = this.getActivity().getSharedPreferences("FilterData", Context.MODE_PRIVATE);
         String latitude, longitude, userid;
         latitude = sharedPreferences.getString("latitude", "51");
@@ -58,7 +62,7 @@ public class AdsCreateAd extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
-                Toast.makeText(getActivity(),"Successfully created ad!", Toast.LENGTH_LONG);
+                Toast.makeText(getActivity(), "Successfully created ad!", Toast.LENGTH_LONG);
                 final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
                 ads.createNewAd(getActivity(), latitudeEditText.getText().toString(), longitudeEditText.getText().toString(), titleEditText.getText().toString(), userid, dateEditText.getText().toString(), priceEditText.getText().toString(), descriptionEditText.getText().toString(), timeEditText.getText().toString(), addressEditText.getText().toString(), new ServerCallbackTwo() {
                     @Override
@@ -81,7 +85,7 @@ public class AdsCreateAd extends Fragment {
         return view;
     }
 
-    private void initializeXmlComponents(View view){
+    private void initializeXmlComponents(View view) {
         createAdButton = view.findViewById(R.id.createAdButton);
         loadLocationButton = view.findViewById(R.id.loadLocationButton);
         latitudeEditText = view.findViewById(R.id.latitudeEditText);
@@ -93,6 +97,5 @@ public class AdsCreateAd extends Fragment {
         timeEditText = view.findViewById(R.id.timeEditText);
         addressEditText = view.findViewById(R.id.addressEditText);
     }
-
 
 }

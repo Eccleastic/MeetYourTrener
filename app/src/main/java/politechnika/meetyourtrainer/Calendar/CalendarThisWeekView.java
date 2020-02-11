@@ -1,6 +1,8 @@
 package politechnika.meetyourtrainer.Calendar;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,13 +52,15 @@ public class CalendarThisWeekView extends Fragment {
         calendar.add(Calendar.DAY_OF_YEAR, 7);
         String nextWeekDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(calendar.getTime());
         System.out.println("Next week date: " + nextWeekDate);
-        
+
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
 
-        MeetingProvider mp = new MeetingProvider(currentDate, nextWeekDate);
+        MeetingProvider mp = new MeetingProvider();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String userid = sharedPreferences.getString("user_id", "1");
         ArrayList<CardModel> models = new ArrayList<>();
         CardModel m = new CardModel();
-        mp.getDataFromApi(getActivity(), new ServerCallback() {
+        mp.getMeetingsFromDateToDate(getActivity(), currentDate, nextWeekDate, userid, new ServerCallback() {
 
             @Override
             public void onSuccess(JSONArray response) throws JSONException {

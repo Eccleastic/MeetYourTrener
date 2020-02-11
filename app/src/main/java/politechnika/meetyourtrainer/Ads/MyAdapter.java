@@ -16,7 +16,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-import politechnika.meetyourtrainer.AdInfoActivity;
 import politechnika.meetyourtrainer.R;
 
 public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter<MyHolder> {
@@ -67,6 +66,7 @@ public class MyAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter
                 if(models.get(position).getAd_id() != null) {
                     Intent intent = new Intent(c, AdInfoActivity.class);
                     intent.putExtra("description", models.get(position).getDescription());
+                    intent.putExtra("id", models.get(position).getTrener_id());
                     intent.putExtra("title", models.get(position).getTitle());
                     intent.putExtra("rate", "4.70");
                     intent.putExtra("email", models.get(position).getEmail());
