@@ -1,17 +1,24 @@
 package politechnika.meetyourtrainer;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import politechnika.meetyourtrainer.Register.RegisterActivity;
+import politechnika.meetyourtrainer.api.APIHandler;
+import politechnika.meetyourtrainer.api.ServerCallback;
 
 
 public class LoginPage extends AppCompatActivity {
@@ -20,6 +27,11 @@ public class LoginPage extends AppCompatActivity {
     EditText userPassword;
     Button loginButton;
     Button signInButton;
+    Button button_app_info;
+
+    TextView textView_log_in_problems;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,96 +42,65 @@ public class LoginPage extends AppCompatActivity {
         signInButton = (Button) findViewById(R.id.button_sign_in);
         userPassword = (EditText) findViewById(R.id.editText_password);
         emailAddress = (EditText) findViewById(R.id.editText_login);
+        textView_log_in_problems = findViewById(R.id.textView_log_in_problems);
+        button_app_info = findViewById(R.id.button_app_info);
 
         Login();
-
         SignIn();
+        LogInProblems();
+        AppInfo();
 
     }
 
-    private boolean emailValidate() {
-        boolean valid = true;
+    private boolean validateLoginCredentials(String userName, String userPassword) {
+        boolean valid = false;
 
-        String email = emailAddress.getText().toString();
-        if (email.isEmpty()) {
-//        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailAddress.setError("Enter a valid email address");
-            valid = false;
+        if (userPassword.isEmpty() || userPassword.length() < 4 || userPassword.length() > 10) {
+            this.userPassword.setError("Password between 4 and 10 characters");
+            return valid;
         } else {
-            emailAddress.setError(null);
+            valid = APIHandler.confirUserNameAndUserPasswordWithDatabase(userName, userPassword);
+            return valid;
         }
 
-        return valid;
-    }
-
-    private boolean passwordValidate() {
-        boolean valid = true;
-
-        String password = userPassword.getText().toString();
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            userPassword.setError("Password between 4 and 10 characters");
-            valid = false;
-        } else {
-            userPassword.setError(null);
-        }
-
-
-        return valid;
     }
 
     private void Login() {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (emailAddress.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getBaseContext(), "Please enter username or email", Toast.LENGTH_LONG).show();
-                } else {
-                    emailValidate();
-                }
-                if (userPassword.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getBaseContext(), "Please enter password", Toast.LENGTH_LONG).show();
-                } else {
-                    passwordValidate();
-                }
-                String url = "jdbc:sqlserver://mytdbserver.database.windows.net:1433;database=MYTDB;user=admin1@mytdbserver;password=mytdbAdmin#;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-
-                try {
-                    Connection connection = null;
-                    connection = DriverManager.getConnection(url);
-//                    String schema = connection.getSchema();
-//                    System.out.println("Successful connection - Schema: " + schema);
-
-                    System.out.println("Query data example:");
-                    System.out.println("=========================================");
-
-                    // Create and execute a SELECT SQL statement.
-                    String selectSql = "SELECT * FROM Users";
-
-                    try (Statement statement = connection.createStatement();
-                         ResultSet resultSet = statement.executeQuery(selectSql)) {
-
-                        // Print results from select statement
-                        System.out.println("Useres table:");
-                        while (resultSet.next()) {
-                            System.out.println(resultSet.getString(1)
-                                    + " "
-                                    + resultSet.getString(2)
-                                    + " "
-                                    + resultSet.getString(3)
-                                    + " "
-                                    + resultSet.getString(4));
-                        }
-                        connection.close();
-                        if (resultSet.getString(4).equals(userPassword.getText().toString())) {
-                            Toast.makeText(getBaseContext(), "Password is correct", Toast.LENGTH_LONG).show();
+                /*Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        if (emailAddress.getText().toString().trim().isEmpty() || userPassword.getText().toString().trim().isEmpty()) {
+                            Toast.makeText(getBaseContext(), "Please enter login credentials", Toast.LENGTH_LONG).show();
+                        } else {
+                            if (validateLoginCredentials(emailAddress.getText().toString(), userPassword.getText().toString())) {
+                                startActivity(new Intent(LoginPage.this, MainActivity.class));
+                            }
                         }
                     }
+                };
+                thread.start();*/
+                Intent intent = new Intent(LoginPage.this, MainActivity.class);
+                final ProgressDialog dialog = ProgressDialog.show(LoginPage.this, null, "Please wait for log in");
+                APIHandler.userAuthentication(emailAddress.getText().toString(), userPassword.getText().toString(), LoginPage.this, new ServerCallback() {
+                    @Override
+                    public void onSuccess(JSONObject result) throws JSONException {
+                        System.out.println(result.get("user_id"));
+                        if (result.getBoolean("loginSucessful")) {
+                            sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("user_id", result.getString("user_id"));
+                            editor.apply();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getBaseContext(), "Wrong login credentials", Toast.LENGTH_LONG).show();
+                        }
+                        dialog.dismiss();
+                    }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                });
             }
         });
 
@@ -130,9 +111,27 @@ public class LoginPage extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this, SignUpPage.class));
+                startActivity(new Intent(LoginPage.this, RegisterActivity.class));
             }
         });
 
+    }
+
+    private void LogInProblems() {
+        textView_log_in_problems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginPage.this, LoginProblemActivity.class));
+            }
+        });
+    }
+
+    private void AppInfo() {
+        button_app_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginPage.this, AppInfoActivity.class));
+            }
+        });
     }
 }

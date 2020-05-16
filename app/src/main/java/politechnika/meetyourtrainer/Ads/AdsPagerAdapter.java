@@ -1,0 +1,31 @@
+package politechnika.meetyourtrainer.Ads;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+
+public class AdsPagerAdapter extends FragmentStatePagerAdapter {
+
+    public AdsPagerAdapter(FragmentManager fm) {
+        super(fm);
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        if (position == 0)
+            return AdsMyAds.newInstance();
+        else
+            return AdsCreateAd.newInstance();
+    }
+
+    @Override
+    public int getCount() {
+        return 2;
+    }
+
+    @Override
+    public String getPageTitle(int position) {
+        if (position == 0) return "My Ads";
+        else return "Create Ad";
+    }
+}
