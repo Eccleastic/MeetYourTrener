@@ -24,4 +24,13 @@
     <string name="fragment_contact">Fragment Contact</string>
     <string name="fragment_settings">Fragment Settings</string>
     <string name="button">Button</string>
+    <string-array name="user_settings_spinner">
+        <item>Edit account credentials</item>
+        <item>Delete account</item>
+    </string-array>
+    <string-array name="sex_spinner">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
 </resources>
