@@ -1,8 +1,7 @@
-package politechnika.meetyourtrainer.UserProfile;
+package politechnika.meetyourtrainer.UserProfile.EditProfile;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,19 +14,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import politechnika.meetyourtrainer.MainActivity;
 import politechnika.meetyourtrainer.Profile.ProfileProvider;
 import politechnika.meetyourtrainer.Profile.ServerCallback;
 import politechnika.meetyourtrainer.R;
-import politechnika.meetyourtrainer.UserProfile.MyProfile.Details.DetailsAdapter;
 
 public class UserProfileEditProfileView extends Fragment {
 
@@ -59,6 +53,7 @@ public class UserProfileEditProfileView extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
+        //setting spinners
         sex_spinner = view.findViewById(R.id.sex_spinner);
         user_settings_spinner = view.findViewById(R.id.user_settings_spinner);
         ArrayAdapter<CharSequence> sex_spinner_adapter = ArrayAdapter.createFromResource(getContext(), R.array.sex_spinner, android.R.layout.simple_spinner_item);
@@ -68,6 +63,7 @@ public class UserProfileEditProfileView extends Fragment {
         sex_spinner.setAdapter(sex_spinner_adapter);
         user_settings_spinner.setAdapter(user_settings_spinner_adapter);
 
+        //settings rest of components
         username = view.findViewById(R.id.username);
         firstNameEditText = view.findViewById(R.id.firstNameEditText);
         surnameEditText = view.findViewById(R.id.surnameEditText);
@@ -76,12 +72,9 @@ public class UserProfileEditProfileView extends Fragment {
         ageEditText = view.findViewById(R.id.ageEditText);
         descriptionEditText = view.findViewById(R.id.descriptionEditText);
         username = view.findViewById(R.id.username);
-
         editProfileInfoButton = view.findViewById(R.id.editProfileInfoButton);
 
-        /**
-         * there should be a code responsible for filling the fields with current user data
-         */
+        //filling fields with current user data
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
         result = this.getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String user_id = result.getString("user_id", "-1");
@@ -103,10 +96,34 @@ public class UserProfileEditProfileView extends Fragment {
             }
         });
 
+        //accept user data changes
         editProfileInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "profile info changed", Toast.LENGTH_LONG).show();
+                String id, password, sex, age, email, phone, firstname, lastname, description;
+                id = result.getString("user_id", "-1");
+                password = "hubert1";
+                sex = String.valueOf(sex_spinner.getSelectedItemPosition()+1);
+                age = ageEditText.getText().toString();
+                email = emailEditText.getText().toString();
+                phone = phoneEditText.getText().toString();
+                firstname = firstNameEditText.getText().toString();
+                lastname = surnameEditText.getText().toString();
+                description = descriptionEditText.getText().toString();
+
+
+                final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Please Wait");
+                profileProvider.editUserProfileInfo(getActivity(), id, password, sex, age, email, phone, firstname, lastname, description, new ServerCallback() {
+                    @Override
+                    public void onSuccess(JSONObject result) throws JSONException {
+                        if (result.getBoolean("wasEdited")) {
+                            Toast.makeText(getActivity(), "Profile information successfully changed!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                });
             }
         });
 
