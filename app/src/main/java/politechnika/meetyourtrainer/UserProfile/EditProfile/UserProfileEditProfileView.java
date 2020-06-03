@@ -102,7 +102,7 @@ public class UserProfileEditProfileView extends Fragment {
             public void onClick(View v) {
                 String id, password, sex, age, email, phone, firstname, lastname, description;
                 id = result.getString("user_id", "-1");
-                password = "hubert1";
+                password = result.getString("user_password", "");
                 sex = String.valueOf(sex_spinner.getSelectedItemPosition()+1);
                 age = ageEditText.getText().toString();
                 email = emailEditText.getText().toString();

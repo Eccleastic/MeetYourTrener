@@ -92,6 +92,7 @@ public class LoginPage extends AppCompatActivity {
                             sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("user_id", result.getString("user_id"));
+                            editor.putString("user_password", userPassword.getText().toString());
                             editor.apply();
                             startActivity(intent);
                         } else {
