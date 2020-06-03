@@ -118,7 +118,7 @@ public class UserProfileMyProfileView extends Fragment {
                 if (phoneNumber.length() >= 7) {
                     makePhoneCall();
                 } else {
-                    Toast.makeText(getActivity(), "No phone number", Toast.LENGTH_SHORT);
+                    Toast.makeText(getActivity(), "No phone number", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -160,7 +160,7 @@ public class UserProfileMyProfileView extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 makePhoneCall();
             } else {
-                Toast.makeText(getActivity(), "Permission DENIED", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "Permission DENIED", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -26,6 +26,7 @@
     <string name="button">Button</string>
     <string-array name="user_settings_spinner">
         <item>Edit account credentials</item>
+        <item>Set profile photo</item>
         <item>Delete account</item>
     </string-array>
     <string-array name="sex_spinner">

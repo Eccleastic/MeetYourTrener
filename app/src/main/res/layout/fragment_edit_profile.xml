@@ -9,7 +9,6 @@
         android:id="@+id/textView19"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Editing your profile info"
         android:textAlignment="center"
         android:textSize="24sp" />
 
